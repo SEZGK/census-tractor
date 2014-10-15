@@ -20,10 +20,6 @@ import com.sezgk.tractor.census.TractBoundary;
  * Parser for geoid->coordinate pairings from the census tract kml files obtained at census.gov. Specifically goes
  * through such a KML file and extracts as many of these pairings as can be found.
  * 
- * IMPORTANT NOTE: In order for the file to parse correctly, one needs to modify 38.357077 to be 38.35707700000. When I
- * figure out why this is, I will have unlocked all of the secrets of the universe. I suspect it may be a java issue.
- * -EGolaszewski
- * 
  * @author Ennis Golaszewski
  * 
  */
@@ -42,6 +38,7 @@ public class TractCoordinateParser
     private static final String saxErrMsg = "Error encountered during parsing.";
     private static final String ioErrMsg = "Error encountered while opening or reading kml file.";
     private static final String coordErrF = "Malformed data encounted while evaluating coordinates at line %d, column %d.";
+    private static final String boundErrF = "Could not find ID for tract boundary %s";
 
     /**
      * Parses the *.kml file on the given path for geoid->coordinate field pairs. Because it is possible for a tract to
@@ -221,8 +218,8 @@ public class TractCoordinateParser
              */
             if (lastID == null || !boundaryMap.containsKey(lastID))
             {
-                // TODO msg;
-                throw new SAXException();
+                String msg = String.format(boundErrF, boundary);
+                throw new SAXException(msg);
             }
 
             boundaryMap.get(lastID).add(boundary);
