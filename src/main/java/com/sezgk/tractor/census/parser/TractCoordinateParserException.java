@@ -8,7 +8,7 @@ package com.sezgk.tractor.census.parser;
 public class TractCoordinateParserException extends RuntimeException
 {
     private static final long serialVersionUID = 2132L;
-    
+
     /**
      * Creates an exception with both a message and a cause. All of the execeptions thrown by the parser should use this
      * constructor.

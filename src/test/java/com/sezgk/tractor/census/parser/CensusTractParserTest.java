@@ -1,14 +1,11 @@
 package com.sezgk.tractor.census.parser;
 
 import static org.junit.Assert.assertTrue;
-
 import java.math.BigDecimal;
 import java.util.List;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
 import com.sezgk.tractor.census.CensusTract;
 import com.sezgk.tractor.census.parser.CensusTractParser;
 

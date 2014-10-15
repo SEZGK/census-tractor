@@ -34,7 +34,7 @@ public class TractCoordinateParserTest
     public void parse()
     {
         Map<Long, List<TractBoundary>> boundaryMap = parser.parse("src/test/resources/census_tract_kml_test_data.kml");
-        
+
         assertTrue(boundaryMap.size() == 3);
         assertTrue(boundaryMap.get(24001000800L) != null);
         assertTrue(boundaryMap.get(24510280401L) != null);

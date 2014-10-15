@@ -24,9 +24,9 @@ public class BoundaryJsonWriter
                 .parse("src/main/resources/kml_data/cb_2013_24_tract_500k.kml");
 
         Gson gson = new GsonBuilder().create();
-        
+
         List<TractBoundary> allBoundaries = new ArrayList<TractBoundary>();
-        
+
         for (List<TractBoundary> boundaries : boundaryMap.values())
         {
             for (TractBoundary boundary : boundaries)
@@ -34,10 +34,10 @@ public class BoundaryJsonWriter
                 allBoundaries.add(boundary);
             }
         }
-        
+
         String json = gson.toJson(allBoundaries);
         String output = String.format("var data = %s;", json);
-        
+
         try
         {
             FileOutputStream outputStream = new FileOutputStream("Output.js");
@@ -49,7 +49,6 @@ public class BoundaryJsonWriter
         {
             e.printStackTrace();
         }
-        
 
     }
 }
