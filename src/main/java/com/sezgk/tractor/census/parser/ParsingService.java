@@ -11,24 +11,29 @@ import com.sezgk.tractor.census.CensusTract;
  */
 public class ParsingService
 {
-    private static final String tractDataPath = "src/main/resources/tract_data/national_census_tracts_2013.txt";
+    private static final String tractDataPath = "src/main/resources/tract_data/md_census_tracts_list_24.txt";
 
-    public List<CensusTract> parseTracts(int stateCode)
+    public List<CensusTract> parseTracts()
     {
         CensusTractParser tractParser = new CensusTractParser();
         List<CensusTract> tracts = tractParser.parse(tractDataPath);
 
+        int tractCount = 0;
+        
         for (CensusTract t : tracts)
         {
             System.out.println(t);
+            tractCount++;
         }
-
+        
+        System.out.println(tractCount);
+        
         return null;
     }
 
     public static void main(String[] args)
     {
         ParsingService p = new ParsingService();
-        p.parseTracts(0);
+        p.parseTracts();
     }
 }

@@ -26,7 +26,7 @@ import com.sezgk.tractor.census.TractBoundary;
 public class TractCoordinateParser
 {
     /* Map to store mappings of geoid->coordinates for later retrieval. */
-    private Map<Long, List<TractBoundary>> boundaryMap = null;
+    private Map<String, List<TractBoundary>> boundaryMap = null;
 
     /*
      * Because the SAX characters() function will sometimes return XML elements in two parts, we'll need a place to
@@ -48,11 +48,11 @@ public class TractCoordinateParser
      * @return a mapping of geoid->coordinates for each found entry.
      * @throws TractCoordinateParserException, if an exception is encountered during any step.
      */
-    public Map<Long, List<TractBoundary>> parse(String path) throws TractCoordinateParserException
+    public Map<String, List<TractBoundary>> parse(String path) throws TractCoordinateParserException
     {
         try
         {
-            boundaryMap = new HashMap<Long, List<TractBoundary>>();
+            boundaryMap = new HashMap<String, List<TractBoundary>>();
 
             SAXParserFactory factory = SAXParserFactory.newInstance();
             SAXParser parser = factory.newSAXParser();
@@ -96,7 +96,7 @@ public class TractCoordinateParser
          * Keeps track of the last ID parsed. This is crucial for matching coordinates found after an ID to their ID in
          * the boundary map.
          */
-        private Long lastID = null;
+        private String lastID = null;
 
         private boolean coordinates = false;
         private boolean geoid = false;
@@ -170,7 +170,7 @@ public class TractCoordinateParser
          */
         private void processIDElement() throws SAXException
         {
-            Long id = extractID(charBuffer.toString());
+            String id = charBuffer.toString();
             insertID(id);
             lastID = id;
             clearBuffer(charBuffer);
@@ -192,7 +192,7 @@ public class TractCoordinateParser
          * @param geoID, the ID to insert. Should already exist in the map.
          * @throws SAXException, if the ID already exists in the map. Duplicate IDs are not permitted.
          */
-        private void insertID(Long geoID) throws SAXException
+        private void insertID(String geoID) throws SAXException
         {
             if (boundaryMap.containsKey(geoID))
             {
@@ -223,29 +223,6 @@ public class TractCoordinateParser
             }
 
             boundaryMap.get(lastID).add(boundary);
-        }
-
-        /**
-         * Extracts the geographic ID number from its representing string. If the string is empty or does not contain a
-         * valid number, an exception will be thrown.
-         * 
-         * @param idString, the string to extract the id from.
-         * @return the extracted geographic id.
-         * @throws SAXException, if the input string is not valid for extraction.
-         */
-        private Long extractID(String idString) throws SAXException
-        {
-            try
-            {
-                Long geoID = Long.parseLong(idString);
-                return geoID;
-            }
-            catch (NumberFormatException e)
-            {
-                String msg = String.format("Could not extract id from string %s at line %d.", idString,
-                        locator.getLineNumber());
-                throw new SAXException(msg, e);
-            }
         }
 
         /**

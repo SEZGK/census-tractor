@@ -27,11 +27,18 @@ public class CensusTractParser
     private static final String badFieldErrorF = "Encountered malformed field in line %d.";
     private static final String badIdErrorF = "Could not parse geographic ID out of input %s at line %d.";
 
-    /* Provides the indecies for the elements in each row of the file */
-    private static int geoIdIndex = 1;
+    /* Provides the indices for the elements in each row of the file */
+    private static int geoIdLeftIndex = 1;
+    private static int geoIdRightIndex = 2;
     private static int popIndex = 2;
     private static int latIndex = 8;
     private static int longIndex = 9;
+
+    /* Provides indices for geoID components. */
+    private static int stateCodeIndex = 0;
+    private static int countyCodeIndex = 2;
+    private static int tractNumIndex = 5;
+    private static int tractNumEndIndex = 11;
 
     /**
      * Parses the census tract file at the provided path.
@@ -112,7 +119,11 @@ public class CensusTractParser
     {
         try
         {
-            GeoID id = parseGeoID(elements[geoIdIndex].trim(), lineNum);
+            /*
+             * For some confounding reason, the census tract data splits the first 5 and the last 8 digits of a geoID
+             * by putting a tab in the middle. We need to capture each half independently..
+             */
+            GeoID id = parseGeoID(elements[geoIdLeftIndex].trim() + elements[geoIdRightIndex].trim(), lineNum);
             long population = Long.parseLong(elements[popIndex].trim());
             BigDecimal latitude = new BigDecimal(elements[latIndex].trim());
             BigDecimal longitude = new BigDecimal(elements[longIndex].trim());
@@ -142,9 +153,9 @@ public class CensusTractParser
     {
         try
         {
-            String stateCode = geoIdField.substring(0, 2);
-            String countyCode = geoIdField.substring(2, 5);
-            String tractNumber = geoIdField.substring(5, 11);
+            String stateCode = geoIdField.substring(stateCodeIndex, countyCodeIndex);
+            String countyCode = geoIdField.substring(countyCodeIndex, tractNumIndex);
+            String tractNumber = geoIdField.substring(tractNumIndex, tractNumEndIndex);
             return new GeoID(Integer.parseInt(stateCode), Integer.parseInt(countyCode), Integer.parseInt(tractNumber));
         }
         /* Possible exceptions: NumberFormat and IndexOutOfBounds. We want to treat them the same. */
