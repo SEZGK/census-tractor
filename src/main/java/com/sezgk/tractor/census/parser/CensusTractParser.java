@@ -8,6 +8,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import com.sezgk.tractor.census.CensusTract;
+import com.sezgk.tractor.census.GeoID;
 
 /**
  * Reader for the tab-delimeted gazetteer census tract files obtained from census.gov.
@@ -22,8 +23,9 @@ public class CensusTractParser
 
     private static final String notFoundErrorF = "File %s could not be found.";
     private static final String badFileErrorF = "File %s could not be read.";
-    private static final String badLineErrorF = "Encountered malformed data line %d";
-    private static final String badFieldErrorF = "Encountered malformed field in line %d";
+    private static final String badLineErrorF = "Encountered malformed data line %d.";
+    private static final String badFieldErrorF = "Encountered malformed field in line %d.";
+    private static final String badIdErrorF = "Could not parse geographic ID out of input %s at line %d.";
 
     /* Provides the indecies for the elements in each row of the file */
     private static int geoIdIndex = 1;
@@ -110,11 +112,11 @@ public class CensusTractParser
     {
         try
         {
-            long geoId = Long.parseLong(elements[geoIdIndex].trim());
+            GeoID id = parseGeoID(elements[geoIdIndex].trim(), lineNum);
             long population = Long.parseLong(elements[popIndex].trim());
             BigDecimal latitude = new BigDecimal(elements[latIndex].trim());
             BigDecimal longitude = new BigDecimal(elements[longIndex].trim());
-            CensusTract newTract = new CensusTract(geoId, population, latitude, longitude);
+            CensusTract newTract = new CensusTract(id, population, latitude, longitude);
             return newTract;
         }
         catch (ArrayIndexOutOfBoundsException e)
@@ -125,6 +127,30 @@ public class CensusTractParser
         catch (NumberFormatException e)
         {
             String msg = String.format(badFieldErrorF, lineNum);
+            throw new CensusTractParserException(msg, e);
+        }
+    }
+
+    /**
+     * Parses a GeoID object out of the fully concatenated geographic ID for a given tract.
+     * 
+     * @param geoIdField, the string field containing the ID string.
+     * @param lineNum, used for identifying the line if an error occurs.
+     * @return a GeoID object representing the string field.
+     */
+    private GeoID parseGeoID(String geoIdField, int lineNum)
+    {
+        try
+        {
+            String stateCode = geoIdField.substring(0, 2);
+            String countyCode = geoIdField.substring(2, 5);
+            String tractNumber = geoIdField.substring(5, 11);
+            return new GeoID(Integer.parseInt(stateCode), Integer.parseInt(countyCode), Integer.parseInt(tractNumber));
+        }
+        /* Possible exceptions: NumberFormat and IndexOutOfBounds. We want to treat them the same. */
+        catch (Exception e)
+        {
+            String msg = String.format(badIdErrorF, geoIdField, lineNum);
             throw new CensusTractParserException(msg, e);
         }
     }

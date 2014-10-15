@@ -1,6 +1,9 @@
 package com.sezgk.tractor.census;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Represents a census tract consistent with those compiled by census.gov.
@@ -9,22 +12,24 @@ import java.math.BigDecimal;
  */
 public class CensusTract
 {
-    private long geoId;
+    private GeoID geoId;
     private long population;
     private MapCoordinate position;
+
+    /* Some tracts have multiple boundaries.. I do not know why. -EGolaszewski */
+    private List<TractBoundary> boundaries = new ArrayList<TractBoundary>();
 
     private static String toStringF = "[geoid = %s,  pop = %s, lat = %s, long = %s]";
 
     /**
      * Creates a new CensusTract instance.
      * 
-     * @param geoId, the fully concatenated geographic code. The format is ssccctttttt where s = state fips code, c =
-     *            county fips code, and t = census tract number.
+     * @param geoId, the fully concatenated geographic code. 
      * @param population, the number of people within the census tract.
      * @param latitude, the latitude coordinate of the census tract center.
      * @param longitude, the longitude coordinate of the census tract center.
      */
-    public CensusTract(long geoId, long population, BigDecimal latitude, BigDecimal longitude)
+    public CensusTract(GeoID geoId, long population, BigDecimal latitude, BigDecimal longitude)
     {
         this.geoId = geoId;
         this.population = population;
@@ -37,7 +42,22 @@ public class CensusTract
         return String.format(toStringF, geoId, population, position.getLatitude(), position.getLongitude());
     }
 
-    public long getGeoId()
+    public void addBoundary(TractBoundary b)
+    {
+        boundaries.add(b);
+    }
+
+    /**
+     * Returns a view of the boundaries attached to this census tract.
+     * 
+     * @return an unmodifiable list of boundaries.
+     */
+    public List<TractBoundary> getBoundaries()
+    {
+        return Collections.unmodifiableList(boundaries);
+    }
+
+    public GeoID getGeoId()
     {
         return geoId;
     }
