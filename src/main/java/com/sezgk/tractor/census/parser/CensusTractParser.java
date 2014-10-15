@@ -28,8 +28,7 @@ public class CensusTractParser
     private static final String badIdErrorF = "Could not parse geographic ID out of input %s at line %d.";
 
     /* Provides the indices for the elements in each row of the file */
-    private static int geoIdLeftIndex = 1;
-    private static int geoIdRightIndex = 2;
+    private static int geoIdIndex = 1;
     private static int popIndex = 2;
     private static int latIndex = 8;
     private static int longIndex = 9;
@@ -123,7 +122,7 @@ public class CensusTractParser
              * For some confounding reason, the census tract data splits the first 5 and the last 8 digits of a geoID
              * by putting a tab in the middle. We need to capture each half independently..
              */
-            GeoID id = parseGeoID(elements[geoIdLeftIndex].trim() + elements[geoIdRightIndex].trim(), lineNum);
+            GeoID id = parseGeoID(elements[geoIdIndex].trim(), lineNum);
             long population = Long.parseLong(elements[popIndex].trim());
             BigDecimal latitude = new BigDecimal(elements[latIndex].trim());
             BigDecimal longitude = new BigDecimal(elements[longIndex].trim());
