@@ -19,7 +19,9 @@ public class MapCoordinate
      */
     private final BigDecimal latitude;
     private final BigDecimal longitude;
-
+    private static final BigDecimal latOrigin = new BigDecimal(39.721077);
+    private static final BigDecimal longOrigin = new BigDecimal(-79.476661);
+    
     private static final String toStringF = "(lat = %s, long = %s)";
 
     /**
@@ -49,4 +51,35 @@ public class MapCoordinate
     {
         return longitude;
     }
+    
+    
+    private static BigDecimal sqrt(BigDecimal value) {
+    	
+    	BigDecimal x = new BigDecimal(Math.sqrt(value.doubleValue()));
+    	return x.add(new BigDecimal(value.subtract(x.multiply(x)).doubleValue() / (x.doubleValue() * 2.0)));
+    }
+
+    
+    
+    
+    public BigDecimal getDistance(MapCoordinate compareCoord) {
+    	
+    	BigDecimal callingLat = this.getLatitude();
+    	BigDecimal callingLong = this.getLongitude();
+    	
+    	BigDecimal compareLat = compareCoord.getLatitude();
+    	BigDecimal compareLong = compareCoord.getLongitude();
+    	
+    	
+    	BigDecimal xCoords = compareLat.subtract(callingLat);
+    	BigDecimal yCoords = compareLong.subtract(callingLong);
+    	
+    	BigDecimal product = xCoords.pow(2).add(yCoords.pow(2));
+    	BigDecimal distance = sqrt(product);
+    	
+    	return distance;
+    	
+    }
+    
+    
 }
