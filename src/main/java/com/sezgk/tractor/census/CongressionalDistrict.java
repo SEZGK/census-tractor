@@ -8,7 +8,7 @@ public class CongressionalDistrict {
 	
 	
 	private List<CensusTract> censusTracts;
-	
+	private int districtPopulation = 0;
 	
 	public CongressionalDistrict() {
 		
@@ -17,13 +17,19 @@ public class CongressionalDistrict {
 	}
 	
 	
-	public void addTract(CensusTract tract) {
+	public int addTract(CensusTract tract) {
 	
 		censusTracts.add(tract);
-		
+		districtPopulation+=tract.getPopulation();
+		return (int) tract.getPopulation();
 	}
 	
+	public int getDistrictPop() {
+		return districtPopulation;
+	}
 	
-	
+	public int getSize() {
+		return censusTracts.size();
+	}
 
 }
