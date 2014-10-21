@@ -64,6 +64,11 @@ public class MapCoordinate
     
     public BigDecimal getDistance(MapCoordinate compareCoord) {
     	
+    	if ((this.getLatitude().compareTo(compareCoord.getLatitude()) == 0) && this.getLongitude().compareTo(compareCoord.getLongitude()) == 0)
+    		{
+    			return new BigDecimal(0);
+    		}
+    	
     	BigDecimal callingLat = this.getLatitude();
     	BigDecimal callingLong = this.getLongitude();
     	

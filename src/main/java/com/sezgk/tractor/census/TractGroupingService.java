@@ -55,7 +55,7 @@ public class TractGroupingService {
 				tracts.remove(0);
 				
 			}
-			tracts=sorter.getSortedCensusList();
+			tracts = new Quicksort(tracts, tracts.get(0).getPosition()).getSortedCensusList();
 			districtPop=0;
 		}
 		
