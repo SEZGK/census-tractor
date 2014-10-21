@@ -18,46 +18,53 @@ function initialize() {
   var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
   
   $.getJSON("http://localhost:8080/data/md", function(result) {
-  
-    for (var i = 0; i < result.length; i++) {
-      var boundaries = result[i].boundaries;
-      var colorCode;
+    for (var n = 0; n < result.length; n++) {
+      console.log(result[n]);
+      var tracts = result[n].censusTracts;
       
-      if (i < 200) {
-        colorCode = '#5F04B4';
-      } else if (i < 400) {
-        colorCode = '#468C40';
-      } else if (i < 600) {
-        colorCode = '#E7FB08';
-      } else if (i < 800) {
-        colorCode = '#5C7FD8';
-      } else { 
+      if (n == 0) {
         colorCode = '#FF0000';
+      } else if (n == 1) {
+        colorCode = '#FF009A';
+      } else if (n == 2) {
+        colorCode = '#9500FF';
+      } else if (n == 3) {
+        colorCode = '#0D00FF';
+      } else if (n == 4) {
+        colorCode = '#00F7FF';
+      } else if (n == 5) {
+        colorCode = '#00FF3C';
+      } else if (n == 6) {
+        colorCode = '#FFFF00';
+      } else if (n == 7) {
+        colorCode = '#FF4000';
       }
-      
-      
-      for (var j = 0; j < boundaries.length; j++) {
-        var points = [];
-        var boundary = boundaries[j];
-        
-        for (var m = 0; m < boundary.coordinates.length; m++) {
-          var coordinate = boundary.coordinates[m];
-          points.push(new google.maps.LatLng(coordinate.latitude, coordinate.longitude));
-        }
-        
-        tractPolygon = new google.maps.Polygon({
-          paths: points,
-          strokeColor: '#FF0000',
-          strokeOpacity: 0.0,
-          strokeWeight: 2,
-          fillColor: colorCode,
-          fillOpacity: 0.35
-        });
 
-        tractPolygon.setMap(map);
+      for (var i = 0; i < tracts.length; i++) {
+        var boundaries = tracts[i].boundaries;
+
+        for (var j = 0; j < boundaries.length; j++) {
+          var points = [];
+          var boundary = boundaries[j];
+        
+          for (var m = 0; m < boundary.coordinates.length; m++) {
+            var coordinate = boundary.coordinates[m];
+            points.push(new google.maps.LatLng(coordinate.latitude, coordinate.longitude));
+          }
+        
+          tractPolygon = new google.maps.Polygon({
+            paths: points,
+            strokeColor: '#FF0000',
+            strokeOpacity: 0.0,
+            strokeWeight: 2,
+            fillColor: colorCode,
+            fillOpacity: 0.35
+          });
+
+          tractPolygon.setMap(map);
+        }
       }
     }
-    
   });
 }
 
