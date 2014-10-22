@@ -9,6 +9,7 @@ import java.math.BigDecimal;
  * code base.
  * 
  * @author Ennis Golaszewski
+ * @author Scott Gillis
  */
 public class MapCoordinate
 {
@@ -19,9 +20,7 @@ public class MapCoordinate
      */
     private final BigDecimal latitude;
     private final BigDecimal longitude;
-    private static final BigDecimal latOrigin = new BigDecimal(39.721077);
-    private static final BigDecimal longOrigin = new BigDecimal(-79.476661);
-    
+
     private static final String toStringF = "(lat = %s, long = %s)";
 
     /**
@@ -42,6 +41,26 @@ public class MapCoordinate
         return String.format(toStringF, latitude, longitude);
     }
 
+    @Override
+    public boolean equals(Object o)
+    {
+        if (o == null || !(o instanceof MapCoordinate))
+        {
+            return false;
+        }
+
+        MapCoordinate other = (MapCoordinate) o;
+
+        if (latitude.compareTo(other.latitude) != 0 || longitude.compareTo(other.longitude) != 0)
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
+
     public BigDecimal getLatitude()
     {
         return latitude;
@@ -51,40 +70,48 @@ public class MapCoordinate
     {
         return longitude;
     }
-    
-    
-    private static BigDecimal sqrt(BigDecimal value) {
-    	
-    	BigDecimal x = new BigDecimal(Math.sqrt(value.doubleValue()));
-    	return x.add(new BigDecimal(value.subtract(x.multiply(x)).doubleValue() / (x.doubleValue() * 2.0)));
+
+    /**
+     * Returns the square root of the input BigDecimal value. This is done by utilizing doubleValue() of BigDecimal.
+     * 
+     * @author Scott Gillis
+     * @param value, the BigDecimal value to take the square root of.
+     * @return the square root of the value.
+     */
+    private static BigDecimal sqrt(BigDecimal value)
+    {
+
+        BigDecimal x = new BigDecimal(Math.sqrt(value.doubleValue()));
+        return x.add(new BigDecimal(value.subtract(x.multiply(x)).doubleValue() / (x.doubleValue() * 2.0)));
     }
 
-    
-    
-    
-    public BigDecimal getDistance(MapCoordinate compareCoord) {
-    	
-    	if ((this.getLatitude().compareTo(compareCoord.getLatitude()) == 0) && this.getLongitude().compareTo(compareCoord.getLongitude()) == 0)
-    		{
-    			return new BigDecimal(0);
-    		}
-    	
-    	BigDecimal callingLat = this.getLatitude();
-    	BigDecimal callingLong = this.getLongitude();
-    	
-    	BigDecimal compareLat = compareCoord.getLatitude();
-    	BigDecimal compareLong = compareCoord.getLongitude();
-    	
-    	
-    	BigDecimal xCoords = compareLat.subtract(callingLat);
-    	BigDecimal yCoords = compareLong.subtract(callingLong);
-    	
-    	BigDecimal product = xCoords.pow(2).add(yCoords.pow(2));
-    	BigDecimal distance = sqrt(product);
-    	
-    	return distance;
-    	
+    /**
+     * Returns the distance from this MapCoordinate point to the input coordinate. This distance is calculated using the
+     * distance formula.
+     * 
+     * @author Scott Gillis
+     * @param compareCoord, the coordinate to get the distance to.
+     * @return the distance from this cooordinate to the compare coordinate.
+     */
+    public BigDecimal getDistance(MapCoordinate compareCoord)
+    {
+        if (this.equals(compareCoord))
+        {
+            return new BigDecimal(0);
+        }
+
+        BigDecimal callingLat = this.getLatitude();
+        BigDecimal callingLong = this.getLongitude();
+
+        BigDecimal compareLat = compareCoord.getLatitude();
+        BigDecimal compareLong = compareCoord.getLongitude();
+
+        BigDecimal xCoords = compareLat.subtract(callingLat);
+        BigDecimal yCoords = compareLong.subtract(callingLong);
+
+        BigDecimal product = xCoords.pow(2).add(yCoords.pow(2));
+        BigDecimal distance = sqrt(product);
+
+        return distance;
     }
-    
-    
 }
