@@ -13,11 +13,20 @@ import com.sezgk.tractor.census.TractBoundary;
  */
 public class ParsingService
 {
-    private static final String tractDataPath = "src/main/resources/tract_data/census_tracts_list_24.txt";
-    private static final String coordDataPath = "src/main/resources/kml_data/cb_2013_24_tract_500k.kml";
+    private static final String tractPathFormat = "src/main/resources/tract_data/census_tracts_list_%d.txt";
+    private static final String coordPathFormat = "src/main/resources/kml_data/cb_2013_%d_tract_500k.kml";
 
-    public List<CensusTract> parseTracts()
+    /**
+     * Parses census tracts and their boundaries for the state with the given state code.
+     * 
+     * @param stateCode, the code for the state to parse.
+     * @return a list of census tract objects for that state.
+     */
+    public static List<CensusTract> parseTracts(int stateCode)
     {
+        String tractDataPath = String.format(tractPathFormat, stateCode);
+        String coordDataPath = String.format(coordPathFormat, stateCode);
+
         CensusTractParser tractParser = new CensusTractParser();
         List<CensusTract> tracts = tractParser.parse(tractDataPath);
 
@@ -39,11 +48,10 @@ public class ParsingService
      * @param boundaryMap, the map of boundaries. The tract will have its boundaries in this map. If not, an error has
      *            occurred somewhere.
      */
-    public void appendBoundaries(CensusTract t, Map<String, List<TractBoundary>> boundaryMap)
+    private static void appendBoundaries(CensusTract t, Map<String, List<TractBoundary>> boundaryMap)
     {
         String id = t.getGeoId().toString();
 
-        /* TODO Beware, some tracts literally have 0 pop. */
         if (boundaryMap.containsKey(id))
         {
             List<TractBoundary> boundaries = boundaryMap.get(id);
