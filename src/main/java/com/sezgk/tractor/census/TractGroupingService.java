@@ -60,13 +60,13 @@ public class TractGroupingService
         }
 
         // Catch any missed tracts and add to the last district
-        System.out.println(tracts.size());
         while (tracts.size() > 0)
         {
             districtPop += districts.get(numDistricts - 1).addTract(tracts.get(0));
             tracts.remove(0);
         }
 
+        /*
         int sum = 0;
 
         for (int i = 0; i < districts.size(); i++)
@@ -75,6 +75,7 @@ public class TractGroupingService
         }
 
         System.out.println(sum);
+        */
         return districts;
     }
 
