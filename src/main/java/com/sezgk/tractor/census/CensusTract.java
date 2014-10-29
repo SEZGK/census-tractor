@@ -15,6 +15,9 @@ public class CensusTract
     private GeoID geoId;
     private long population;
     private MapCoordinate position;
+    private int democrats = 0;
+    private int republicans = 0;
+    private int independents = 0;
 
     /* Some tracts have multiple boundaries.. I do not know why. -EGolaszewski */
     private List<TractBoundary> boundaries = new ArrayList<TractBoundary>();
@@ -70,5 +73,12 @@ public class CensusTract
     public MapCoordinate getPosition()
     {
         return position;
+    }
+    
+    public void addPrecinct (VotingPrecinct v)
+    {
+    	democrats += v.getDemocrats();
+    	republicans += v.getRepublicans();
+    	independents += v.getIndependents();
     }
 }
