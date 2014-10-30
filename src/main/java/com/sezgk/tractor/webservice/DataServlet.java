@@ -36,12 +36,13 @@ public class DataServlet extends HttpServlet
         tracts = PoliticalParser.parsePrecincts(StateCode.MD, tracts);
         List<CongressionalDistrict> districts = TractGroupingService.createDistricts(tracts);
          
-        for (int i=0; i<districts.size(); i++)
+        for (int i=1; i<=districts.size(); i++)
         {
-        	System.out.println("District "+i+1);
-        	System.out.println("Democrats: "+districts.get(i).getDemocrats());
-        	System.out.println("Republicans: "+districts.get(i).getRepublicans());
-        	System.out.println("Independents: "+districts.get(i).getIndependents());
+        	System.out.println("District "+i);
+        	System.out.println("Democrats: "+districts.get(i-1).getDemocrats());
+        	System.out.println("Republicans: "+districts.get(i-1).getRepublicans());
+        	System.out.println("Independents: "+districts.get(i-1).getIndependents());
+        	System.out.println("Boundary count: "+districts.get(i-1).getBoundaryCount());
         }
         
         Gson gson = new GsonBuilder().create();

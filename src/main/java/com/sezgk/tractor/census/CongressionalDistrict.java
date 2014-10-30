@@ -15,6 +15,7 @@ public class CongressionalDistrict
     private int democrats = 0;
     private int republicans = 0;
     private int independents = 0;
+    private List<MapCoordinate> districtBoundary;
 
     /**
      * Creates a new congressional district object.
@@ -22,6 +23,7 @@ public class CongressionalDistrict
     public CongressionalDistrict()
     {
 	censusTracts = new ArrayList<CensusTract>();
+	districtBoundary = new ArrayList<MapCoordinate>();
     }
 
     /**
@@ -38,6 +40,18 @@ public class CongressionalDistrict
 	democrats += tract.getDemocrats();
 	republicans += tract.getRepublicans();
 	independents += tract.getIndependents();
+	
+	for (int i=0; i<tract.getBoundaries().size(); i++)
+	{
+		for (int j=0; j<tract.getBoundaries().get(i).getCoordinates().size(); j++)
+		{
+			if (districtBoundary.contains(tract.getBoundaries().get(i).getCoordinates().get(j)) == false)
+			{
+				districtBoundary.add(tract.getBoundaries().get(i).getCoordinates().get(j));
+			}
+		}
+		
+	}
 	
     }
 
@@ -70,4 +84,10 @@ public class CongressionalDistrict
     {
     	return independents;
     }
+    
+    public int getBoundaryCount()
+    {
+    	return districtBoundary.size();
+    }
+    
 }

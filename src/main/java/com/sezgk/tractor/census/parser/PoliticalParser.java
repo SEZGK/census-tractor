@@ -44,6 +44,7 @@ public class PoliticalParser {
 
     private static final String precinctPathFormat = "src/main/resources/political_data/political_data_%d.txt";
 
+    //Takes the already parsed list of tracts, and adds the voter registration information as needed
     public static List<CensusTract> parsePrecincts(int stateCode, List<CensusTract> tracts) 
     {
     	String precinctDataPath = String.format(precinctPathFormat, stateCode);
@@ -56,7 +57,6 @@ public class PoliticalParser {
         int tractCounter;
         for (int i=0; i<precincts.size(); i++)
         {
-        	//System.out.println(i);
         	tractID = precincts.get(i).getTractID();
         	tractCounter = 0;
         	found = false;
@@ -157,7 +157,6 @@ public class PoliticalParser {
              */
         	
         	GeoID tractID = parseGeoID(elements[censusTractID].trim(), lineNum);
-        	//GeoID tractID = Integer.parseInt(elements[censusTractID].trim());
         	int democrats = Integer.parseInt(elements[democratsID].trim());
         	int republicans = Integer.parseInt(elements[republicansID].trim());
         	int independents = Integer.parseInt(elements[independentsID].trim());
