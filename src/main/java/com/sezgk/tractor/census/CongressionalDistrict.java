@@ -12,6 +12,9 @@ public class CongressionalDistrict
 {
     private List<CensusTract> censusTracts;
     private int districtPopulation = 0;
+    private int democrats = 0;
+    private int republicans = 0;
+    private int independents = 0;
 
     /**
      * Creates a new congressional district object.
@@ -32,6 +35,10 @@ public class CongressionalDistrict
 
 	censusTracts.add(tract);
 	districtPopulation += tract.getPopulation();
+	democrats += tract.getDemocrats();
+	republicans += tract.getRepublicans();
+	independents += tract.getIndependents();
+	
     }
 
     public List<CensusTract> getCensusTracts()
@@ -47,5 +54,20 @@ public class CongressionalDistrict
     public int getSize()
     {
 	return censusTracts.size();
+    }
+    
+    public int getDemocrats()
+    {
+    	return democrats;
+    }
+    
+    public int getRepublicans()
+    {
+    	return republicans;
+    }
+    
+    public int getIndependents()
+    {
+    	return independents;
     }
 }

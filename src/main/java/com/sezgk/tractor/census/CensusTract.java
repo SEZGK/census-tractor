@@ -77,8 +77,23 @@ public class CensusTract
     
     public void addPrecinct (VotingPrecinct v)
     {
-    	democrats += v.getDemocrats();
-    	republicans += v.getRepublicans();
-    	independents += v.getIndependents();
+    	this.democrats += v.getDemocrats();
+    	this.republicans += v.getRepublicans();
+    	this.independents += v.getIndependents();
+    }
+    
+    public int getDemocrats()
+    {
+    	return democrats;
+    }
+    
+    public int getRepublicans()
+    {
+    	return republicans;
+    }
+    
+    public int getIndependents()
+    {
+    	return independents;
     }
 }

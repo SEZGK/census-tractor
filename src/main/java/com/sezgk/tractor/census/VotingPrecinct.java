@@ -5,13 +5,14 @@ public class VotingPrecinct {
 	private int democrats = 0;
     private int republicans = 0;
     private int independents = 0;
+    private GeoID tractID;
     
     
-	public VotingPrecinct(int tractID, int democrats, int republicans, int independents) {
+	public VotingPrecinct(GeoID tractID, int democrats, int republicans, int independents) {
 		this.democrats += democrats;
 		this.republicans += republicans;
 		this.independents += independents;
-		// TODO Auto-generated constructor stub
+		this.tractID = tractID;
 	}
 
 	public int getDemocrats() {
@@ -29,6 +30,9 @@ public class VotingPrecinct {
 		return independents;
 	}
     
-    
+    public GeoID getTractID() {
+    	
+    	return tractID;
+    }
 
 }
