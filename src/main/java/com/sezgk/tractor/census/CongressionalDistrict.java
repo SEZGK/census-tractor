@@ -1,7 +1,11 @@
 package com.sezgk.tractor.census;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
+import java.math.MathContext;
+
 
 /**
  * Represents a congressional district of a state.
@@ -15,6 +19,7 @@ public class CongressionalDistrict
     private int democrats = 0;
     private int republicans = 0;
     private int independents = 0;
+    private MapCoordinate center = new MapCoordinate(BigDecimal.ZERO, BigDecimal.ZERO);
 
     /**
      * Creates a new congressional district object.
@@ -37,6 +42,7 @@ public class CongressionalDistrict
     	democrats += tract.getDemocrats();
     	republicans += tract.getRepublicans();
     	independents += tract.getIndependents();
+    	center = new MapCoordinate(center.getLatitude().multiply(BigDecimal.valueOf(censusTracts.size()-1)).add(tract.getPosition().getLatitude()).divide(BigDecimal.valueOf(censusTracts.size()), new MathContext(12, RoundingMode.HALF_DOWN)).setScale(12, RoundingMode.HALF_DOWN), center.getLongitude().multiply(BigDecimal.valueOf(censusTracts.size()-1)).add(tract.getPosition().getLongitude()).divide(BigDecimal.valueOf(censusTracts.size()), new MathContext(12, RoundingMode.HALF_DOWN)).setScale(12, RoundingMode.HALF_DOWN));
     }
 
     public List<CensusTract> getCensusTracts()
@@ -67,5 +73,10 @@ public class CongressionalDistrict
     public int getIndependents()
     {
     	return independents;
-    }    
+    }
+
+	public MapCoordinate getCenter() 
+	{
+		return center;
+	}    
 }
