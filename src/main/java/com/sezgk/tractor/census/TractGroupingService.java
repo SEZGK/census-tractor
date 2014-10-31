@@ -70,16 +70,6 @@ public class TractGroupingService
             tracts.remove(0);
         }
 
-        /*
-        int sum = 0;
-
-        for (int i = 0; i < districts.size(); i++)
-        {
-            sum += districts.get(i).getDistrictPop();
-        }
-
-        System.out.println(sum);
-        */
         return districts;
     }
 

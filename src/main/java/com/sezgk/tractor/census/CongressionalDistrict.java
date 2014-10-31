@@ -15,7 +15,6 @@ public class CongressionalDistrict
     private int democrats = 0;
     private int republicans = 0;
     private int independents = 0;
-    private List<MapCoordinate> districtBoundary;
 
     /**
      * Creates a new congressional district object.
@@ -23,7 +22,6 @@ public class CongressionalDistrict
     public CongressionalDistrict()
     {
 	censusTracts = new ArrayList<CensusTract>();
-	districtBoundary = new ArrayList<MapCoordinate>();
     }
 
     /**
@@ -34,40 +32,26 @@ public class CongressionalDistrict
      */
     public void addTract(CensusTract tract)
     {
-
-	censusTracts.add(tract);
-	districtPopulation += tract.getPopulation();
-	democrats += tract.getDemocrats();
-	republicans += tract.getRepublicans();
-	independents += tract.getIndependents();
-	
-	for (int i=0; i<tract.getBoundaries().size(); i++)
-	{
-		for (int j=0; j<tract.getBoundaries().get(i).getCoordinates().size(); j++)
-		{
-			if (districtBoundary.contains(tract.getBoundaries().get(i).getCoordinates().get(j)) == false)
-			{
-				districtBoundary.add(tract.getBoundaries().get(i).getCoordinates().get(j));
-			}
-		}
-		
-	}
-	
+    	censusTracts.add(tract);
+    	districtPopulation += tract.getPopulation();
+    	democrats += tract.getDemocrats();
+    	republicans += tract.getRepublicans();
+    	independents += tract.getIndependents();
     }
 
     public List<CensusTract> getCensusTracts()
     {
-	return censusTracts;
+    	return censusTracts;
     }
 
     public int getDistrictPop()
     {
-	return districtPopulation;
+    	return districtPopulation;
     }
 
     public int getSize()
     {
-	return censusTracts.size();
+    	return censusTracts.size();
     }
     
     public int getDemocrats()
@@ -83,11 +67,5 @@ public class CongressionalDistrict
     public int getIndependents()
     {
     	return independents;
-    }
-    
-    public int getBoundaryCount()
-    {
-    	return districtBoundary.size();
-    }
-    
+    }    
 }

@@ -42,7 +42,6 @@ public class DataServlet extends HttpServlet
         	System.out.println("Democrats: "+districts.get(i-1).getDemocrats());
         	System.out.println("Republicans: "+districts.get(i-1).getRepublicans());
         	System.out.println("Independents: "+districts.get(i-1).getIndependents());
-        	System.out.println("Boundary count: "+districts.get(i-1).getBoundaryCount());
         }
         
         Gson gson = new GsonBuilder().create();
