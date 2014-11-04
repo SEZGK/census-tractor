@@ -16,4 +16,9 @@ public class StateCode
      * Maryland FIPS code.
      */
     public static final int MD = 24;
+    
+    /**
+     * West Virginia FIPS code.
+     */
+    public static final int WV = 54;
 }

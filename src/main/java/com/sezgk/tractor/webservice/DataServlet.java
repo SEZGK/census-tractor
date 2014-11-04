@@ -40,6 +40,7 @@ public class DataServlet extends HttpServlet
 	stateCodes = new HashMap<String, Integer>();
 	stateCodes.put("/md", StateCode.MD);
 	stateCodes.put("/de", StateCode.DE);
+	stateCodes.put("/wv", StateCode.WV);
     }
 
     @Override

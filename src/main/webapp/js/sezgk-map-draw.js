@@ -4,6 +4,7 @@ var nextState = "md";
 var stateCoordinates = [];
 stateCoordinates["md"] = new google.maps.LatLng(39.185433,-77.004032);
 stateCoordinates["de"] = new google.maps.LatLng(38.942321,-75.47925);
+stateCoordinates["wv"] = new google.maps.LatLng(38.642618,-80.487556);
 
 google.maps.event.addDomListener(window, 'load', initialize);
 
@@ -23,7 +24,7 @@ $(document).ready(function() {
 
 function initialize() {
   var mapOptions = {
-    zoom: 9,
+    zoom: 8,
     center: stateCoordinates[currentState],
     mapTypeId: google.maps.MapTypeId.TERRAIN
   };
