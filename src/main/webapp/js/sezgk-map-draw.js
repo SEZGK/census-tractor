@@ -1,14 +1,37 @@
+var currentState = "md";
+var nextState = "md";
+
+var stateCoordinates = [];
+stateCoordinates["md"] = new google.maps.LatLng(39.185433,-77.004032);
+stateCoordinates["de"] = new google.maps.LatLng(38.942321,-75.47925);
+
+google.maps.event.addDomListener(window, 'load', initialize);
+
+$(document).ready(function() {
+    var stateMenu = document.getElementById('stateMenu');
+    
+    stateMenu.addEventListener("click", function() {
+        nextState = stateMenu[stateMenu.selectedIndex].value;
+        console.log(currentState);
+        
+        if (nextState !== currentState) {
+            currentState = nextState;
+            initialize();
+        }
+    });
+});
+
 function initialize() {
   var mapOptions = {
-    zoom: 10,
-    center: new google.maps.LatLng(39.624405, -78.778477),
+    zoom: 9,
+    center: stateCoordinates[currentState],
     mapTypeId: google.maps.MapTypeId.TERRAIN
   };
   
   var tractPolygon;
   var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
   
-  $.getJSON("http://localhost:8080/data/md", function(result) {
+  $.getJSON("http://localhost:8080/data/" + currentState, function(result) {
     var usedColors = [];
     
     for (var n = 0; n < result.length; n++) {
@@ -48,5 +71,3 @@ function initialize() {
     }
   });
 }
-
-google.maps.event.addDomListener(window, 'load', initialize);
