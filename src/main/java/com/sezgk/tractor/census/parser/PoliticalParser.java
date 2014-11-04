@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,16 +12,16 @@ import com.sezgk.tractor.census.GeoID;
 import com.sezgk.tractor.census.VotingPrecinct;
 
 /**
- * Reader for the tab-delimeted political data file created by Gary.
+ * Reader for the tab-delimited political data file created by Gary.
  * 
  * @author Gary Thompson
  */
 
 public class PoliticalParser {
 
-    private static String currentLine = "";
-    private static String delimeter = "\t";
-    private static BufferedReader bReader = null;
+    private String currentLine = "";
+    private String delimeter = "\t";
+    private BufferedReader bReader = null;
 
     private static final String notFoundErrorF = "File %s could not be found.";
     private static final String badFileErrorF = "File %s could not be read.";
@@ -45,7 +44,7 @@ public class PoliticalParser {
     private static final String precinctPathFormat = "src/main/resources/political_data/political_data_%d.txt";
 
     //Takes the already parsed list of tracts, and adds the voter registration information as needed
-    public static List<CensusTract> parsePrecincts(int stateCode, List<CensusTract> tracts) 
+    public List<CensusTract> parsePrecincts(int stateCode, List<CensusTract> tracts) 
     {
     	String precinctDataPath = String.format(precinctPathFormat, stateCode);
     	
@@ -79,7 +78,7 @@ public class PoliticalParser {
      * @return a list of census tracts parsed out of the file.
      * @throws CensusTractParserException, thrown if there is an exception encountered during parsing.
      */
-    public static List<VotingPrecinct> parse(String path) throws CensusTractParserException
+    private List<VotingPrecinct> parse(String path) throws CensusTractParserException
     {
         if (path == null)
         {
@@ -122,7 +121,7 @@ public class PoliticalParser {
      * @throws FileNotFoundException, thrown if the file is not found.
      * @throws IOException, thrown if the file cannot be read properly.
      */
-    private static List<VotingPrecinct> doParse(String path) throws FileNotFoundException, IOException
+    private List<VotingPrecinct> doParse(String path) throws FileNotFoundException, IOException
     {
         List<VotingPrecinct> precincts = new ArrayList<VotingPrecinct>();
         bReader = new BufferedReader(new FileReader(path));
@@ -147,7 +146,7 @@ public class PoliticalParser {
      * @return a census tract built out of those components.
      * @throws CensusTractParserException, if there is an error encountered parsing a line.
      */
-    private static VotingPrecinct parsePrecinct(String[] elements, int lineNum) throws CensusTractParserException
+    private VotingPrecinct parsePrecinct(String[] elements, int lineNum) throws CensusTractParserException
     {
         try
         {
@@ -185,7 +184,7 @@ public class PoliticalParser {
      * @param lineNum, used for identifying the line if an error occurs.
      * @return a GeoID object representing the string field.
      */
-    private static GeoID parseGeoID(String geoIdField, int lineNum)
+    private GeoID parseGeoID(String geoIdField, int lineNum)
     {
         try
         {
@@ -205,7 +204,7 @@ public class PoliticalParser {
     /**
      * Closes the buffered reader if it is open. If the bReader is set to null, this will do nothing.
      */
-    private static void closeReader()
+    private void closeReader()
     {
         try
         {

@@ -55,7 +55,7 @@ public class DataServlet extends HttpServlet
 
 	if (sCode == StateCode.MD)
 	{
-	    tracts = PoliticalParser.parsePrecincts(sCode, tracts);
+	    tracts = ParsingService.parsePrecincts(sCode, tracts);
 	}
 
 	List<CongressionalDistrict> districts = TractGroupingService.createDistricts(tracts);
