@@ -51,7 +51,7 @@ public class TractGroupingService
             districts.add(new CongressionalDistrict());
             while ((districtPop + tracts.get(0).getPopulation()) < targetPop && tracts.size() > 0)
             {
-        	CensusTract nextTract = tracts.get(0);
+                CensusTract nextTract = tracts.get(0);
                 districts.get(districtCounter).addTract(nextTract);
                 districtPop += nextTract.getPopulation();
                 tracts.remove(0);
@@ -87,7 +87,7 @@ public class TractGroupingService
         {
             population += t.getPopulation();
         }
-        
+
         return population;
     }
 

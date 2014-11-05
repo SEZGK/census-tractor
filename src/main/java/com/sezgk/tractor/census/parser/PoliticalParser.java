@@ -6,7 +6,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
 import com.sezgk.tractor.census.CensusTract;
 import com.sezgk.tractor.census.GeoID;
 import com.sezgk.tractor.census.VotingPrecinct;
@@ -17,7 +16,8 @@ import com.sezgk.tractor.census.VotingPrecinct;
  * @author Gary Thompson
  */
 
-public class PoliticalParser {
+public class PoliticalParser
+{
 
     private String currentLine = "";
     private String delimeter = "\t";
@@ -34,7 +34,7 @@ public class PoliticalParser {
     private static int democratsID = 3;
     private static int republicansID = 4;
     private static int independentsID = 5;
-    
+
     /* Provides indices for geoID components. */
     private static int stateCodeIndex = 0;
     private static int countyCodeIndex = 2;
@@ -43,34 +43,37 @@ public class PoliticalParser {
 
     private static final String precinctPathFormat = "src/main/resources/political_data/political_data_%d.txt";
 
-    //Takes the already parsed list of tracts, and adds the voter registration information as needed
-    public List<CensusTract> parsePrecincts(int stateCode, List<CensusTract> tracts) 
+    // Takes the already parsed list of tracts, and adds the voter registration information as needed
+    public List<CensusTract> parsePrecincts(int stateCode, List<CensusTract> tracts)
     {
-    	String precinctDataPath = String.format(precinctPathFormat, stateCode);
-    	
-    	PoliticalParser precinctParser = new PoliticalParser();
+        String precinctDataPath = String.format(precinctPathFormat, stateCode);
+
+        PoliticalParser precinctParser = new PoliticalParser();
         List<VotingPrecinct> precincts = precinctParser.parse(precinctDataPath);
-    	
+
         GeoID tractID;
         boolean found;
         int tractCounter;
-        for (int i=0; i<precincts.size(); i++)
+        for (int i = 0; i < precincts.size(); i++)
         {
-        	tractID = precincts.get(i).getTractID();
-        	tractCounter = 0;
-        	found = false;
-        	while (found == false)
-        	{
-        		if (tracts.get(tractCounter).getGeoId().getCountyCode() == tractID.getCountyCode() && tracts.get(tractCounter).getGeoId().getStateCode() == tractID.getStateCode() && tracts.get(tractCounter).getGeoId().getTractNumber() == tractID.getTractNumber())
-        		{
-        			tracts.get(tractCounter).addPrecinct(precincts.get(i));
-        			found = true;
-        		}
-        		tractCounter++;
-        	}
+            tractID = precincts.get(i).getTractID();
+            tractCounter = 0;
+            found = false;
+            while (found == false)
+            {
+                if (tracts.get(tractCounter).getGeoId().getCountyCode() == tractID.getCountyCode()
+                        && tracts.get(tractCounter).getGeoId().getStateCode() == tractID.getStateCode()
+                        && tracts.get(tractCounter).getGeoId().getTractNumber() == tractID.getTractNumber())
+                {
+                    tracts.get(tractCounter).addPrecinct(precincts.get(i));
+                    found = true;
+                }
+                tractCounter++;
+            }
         }
-		return tracts;
-	}
+        return tracts;
+    }
+
     /**
      * Parses the census tract file at the provided path.
      * 
@@ -151,19 +154,18 @@ public class PoliticalParser {
         try
         {
             /*
-             * For some confounding reason, the census tract data splits the first 5 and the last 8 digits of a geoID
-             * by putting a tab in the middle. We need to capture each half independently..
+             * For some confounding reason, the census tract data splits the first 5 and the last 8 digits of a geoID by
+             * putting a tab in the middle. We need to capture each half independently..
              */
-        	
-        	GeoID tractID = parseGeoID(elements[censusTractID].trim(), lineNum);
-        	int democrats = Integer.parseInt(elements[democratsID].trim());
-        	int republicans = Integer.parseInt(elements[republicansID].trim());
-        	int independents = Integer.parseInt(elements[independentsID].trim());
-        	
+
+            GeoID tractID = parseGeoID(elements[censusTractID].trim(), lineNum);
+            int democrats = Integer.parseInt(elements[democratsID].trim());
+            int republicans = Integer.parseInt(elements[republicansID].trim());
+            int independents = Integer.parseInt(elements[independentsID].trim());
+
             VotingPrecinct newPrecinct = new VotingPrecinct(tractID, democrats, republicans, independents);
             return newPrecinct;
-        	
-        	
+
         }
         catch (ArrayIndexOutOfBoundsException e)
         {
@@ -200,7 +202,7 @@ public class PoliticalParser {
             throw new CensusTractParserException(msg, e);
         }
     }
-    
+
     /**
      * Closes the buffered reader if it is open. If the bReader is set to null, this will do nothing.
      */
@@ -220,5 +222,4 @@ public class PoliticalParser {
         }
     }
 
-	
 }

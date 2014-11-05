@@ -33,20 +33,21 @@ public class MainServlet extends HttpServlet
         ResourceHandler rHandler = new ResourceHandler();
         rHandler.setDirectoriesListed(false);
         rHandler.setResourceBase("./src/main/webapp");
-        
+
         ContextHandler resourceContext = new ContextHandler("/app");
         resourceContext.setHandler(rHandler);
-        
+
         ServletContextHandler servletContext = new ServletContextHandler(ServletContextHandler.SESSIONS);
         servletContext.setContextPath("/");
         servletContext.addServlet(new ServletHolder(new DataServlet()), "/data/*");
-        
+
         HandlerList handlers = new HandlerList();
-        handlers.setHandlers(new Handler[]{resourceContext, servletContext});
-        
+        handlers.setHandlers(new Handler[]
+        { resourceContext, servletContext });
+
         Server server = new Server(8080);
         server.setHandler(handlers);
-        
+
         try
         {
             server.start();

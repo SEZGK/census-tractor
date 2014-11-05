@@ -27,7 +27,7 @@ public class CensusTract
     /**
      * Creates a new CensusTract instance.
      * 
-     * @param geoId, the fully concatenated geographic code. 
+     * @param geoId, the fully concatenated geographic code.
      * @param population, the number of people within the census tract.
      * @param latitude, the latitude coordinate of the census tract center.
      * @param longitude, the longitude coordinate of the census tract center.
@@ -74,26 +74,26 @@ public class CensusTract
     {
         return position;
     }
-    
-    public void addPrecinct (VotingPrecinct v)
+
+    public void addPrecinct(VotingPrecinct v)
     {
-    	this.democrats += v.getDemocrats();
-    	this.republicans += v.getRepublicans();
-    	this.independents += v.getIndependents();
+        this.democrats += v.getDemocrats();
+        this.republicans += v.getRepublicans();
+        this.independents += v.getIndependents();
     }
-    
+
     public int getDemocrats()
     {
-    	return democrats;
+        return democrats;
     }
-    
+
     public int getRepublicans()
     {
-    	return republicans;
+        return republicans;
     }
-    
+
     public int getIndependents()
     {
-    	return independents;
+        return independents;
     }
 }

@@ -119,8 +119,8 @@ public class CensusTractParser
         try
         {
             /*
-             * For some confounding reason, the census tract data splits the first 5 and the last 8 digits of a geoID
-             * by putting a tab in the middle. We need to capture each half independently..
+             * For some confounding reason, the census tract data splits the first 5 and the last 8 digits of a geoID by
+             * putting a tab in the middle. We need to capture each half independently..
              */
             GeoID id = parseGeoID(elements[geoIdIndex].trim(), lineNum);
             long population = Long.parseLong(elements[popIndex].trim());

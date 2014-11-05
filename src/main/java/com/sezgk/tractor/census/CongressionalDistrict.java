@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.math.MathContext;
 
-
 /**
  * Represents a congressional district of a state.
  * 
@@ -26,7 +25,7 @@ public class CongressionalDistrict
      */
     public CongressionalDistrict()
     {
-	censusTracts = new ArrayList<CensusTract>();
+        censusTracts = new ArrayList<CensusTract>();
     }
 
     /**
@@ -37,46 +36,52 @@ public class CongressionalDistrict
      */
     public void addTract(CensusTract tract)
     {
-    	censusTracts.add(tract);
-    	districtPopulation += tract.getPopulation();
-    	democrats += tract.getDemocrats();
-    	republicans += tract.getRepublicans();
-    	independents += tract.getIndependents();
-    	center = new MapCoordinate(center.getLatitude().multiply(BigDecimal.valueOf(censusTracts.size()-1)).add(tract.getPosition().getLatitude()).divide(BigDecimal.valueOf(censusTracts.size()), new MathContext(12, RoundingMode.HALF_DOWN)).setScale(12, RoundingMode.HALF_DOWN), center.getLongitude().multiply(BigDecimal.valueOf(censusTracts.size()-1)).add(tract.getPosition().getLongitude()).divide(BigDecimal.valueOf(censusTracts.size()), new MathContext(12, RoundingMode.HALF_DOWN)).setScale(12, RoundingMode.HALF_DOWN));
+        censusTracts.add(tract);
+        districtPopulation += tract.getPopulation();
+        democrats += tract.getDemocrats();
+        republicans += tract.getRepublicans();
+        independents += tract.getIndependents();
+        center = new MapCoordinate(center.getLatitude().multiply(BigDecimal.valueOf(censusTracts.size() - 1))
+                .add(tract.getPosition().getLatitude())
+                .divide(BigDecimal.valueOf(censusTracts.size()), new MathContext(12, RoundingMode.HALF_DOWN))
+                .setScale(12, RoundingMode.HALF_DOWN), center.getLongitude()
+                .multiply(BigDecimal.valueOf(censusTracts.size() - 1)).add(tract.getPosition().getLongitude())
+                .divide(BigDecimal.valueOf(censusTracts.size()), new MathContext(12, RoundingMode.HALF_DOWN))
+                .setScale(12, RoundingMode.HALF_DOWN));
     }
 
     public List<CensusTract> getCensusTracts()
     {
-    	return censusTracts;
+        return censusTracts;
     }
 
     public int getDistrictPop()
     {
-    	return districtPopulation;
+        return districtPopulation;
     }
 
     public int getSize()
     {
-    	return censusTracts.size();
-    }
-    
-    public int getDemocrats()
-    {
-    	return democrats;
-    }
-    
-    public int getRepublicans()
-    {
-    	return republicans;
-    }
-    
-    public int getIndependents()
-    {
-    	return independents;
+        return censusTracts.size();
     }
 
-	public MapCoordinate getCenter() 
-	{
-		return center;
-	}    
+    public int getDemocrats()
+    {
+        return democrats;
+    }
+
+    public int getRepublicans()
+    {
+        return republicans;
+    }
+
+    public int getIndependents()
+    {
+        return independents;
+    }
+
+    public MapCoordinate getCenter()
+    {
+        return center;
+    }
 }
