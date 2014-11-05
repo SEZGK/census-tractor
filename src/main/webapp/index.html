@@ -2,22 +2,74 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <style type="text/css">
-      html, body, #map-canvas { height: 100%; margin: 0; padding: 0;}
-    </style>
+    <link rel="stylesheet" href="css/normalize.css">
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script type="text/javascript" src="js/random-colors.js"></script>
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCczeoMAb7Uwm_A07TEwcr259PFQRZkR8g"></script>
     <script type="text/javascript" src="js/sezgk-map-draw.js"></script>
+    <style>
+    	body {
+    		background-color: #b0c4de;
+		}
+    
+      	.map-container {
+      		width: 98%;
+      		margin-top: 1%;
+      		margin-left: auto;
+    		margin-right: auto;
+    		background-color: #F2F2F2;
+    		border-top-left-radius: 25px;
+    		border-top-right-radius: 25px;
+      	}
+      	
+      	.menu-label {
+      		font-size: 150%;
+      		font-weight: normal;
+      	}
+      
+      	.map-menu {
+      		width: 100%;
+      		padding-left: 1%;
+      		padding-right: 1%;
+      		padding-top: 1%;
+      		padding-bottom: 1%;
+      		font-family: "Trebuchet MS", Helvetica, sans-serif;
+      	}
+      	
+      	.state-picker {
+      		display: inline-block;
+      	}
+      	
+      	.ndistrict-picker {
+      		display: inline-block;
+      		padding-left: 10%;
+      	}
+    
+      	#map-canvas {
+        	width: 100%;
+        	height: 700px;
+      	}
+    </style> 
   </head>
   <body>
-    <div id="map-controls">
-        <select id="stateMenu">
-            <option value="md">Maryland</option>
-            <option value="de">Delaware</option>
-            <option value="wv">West Virginia</option>
-        </select>
+    <div class="map-container">
+    	<div class="map-menu">
+    		<div class="state-picker">
+    			<strong class="menu-label">Select a State</strong>
+    			<br>
+        		<select id="stateMenu">
+            		<option value="md">Maryland</option>
+            		<option value="de">Delaware</option>
+            		<option value="wv">West Virginia</option>
+        		</select>
+        	</div>
+        	<div class="ndistrict-picker">
+        		<strong class="menu-label">Number of Districts</strong>
+        		<br>
+        		<input type="number" id="districtsPicker" name="ndistricts" min="1" max="100">
+        	</div>
+        </div>
+    	<div id="map-canvas"></div>
     </div>
-    <div id="map-canvas"></div>
   </body>
 </html>

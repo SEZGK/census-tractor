@@ -1,28 +1,38 @@
-var currentState = "md";
-var nextState = "md";
+var defaultState = "md";
+var currentState;
 
 var stateCoordinates = [];
 stateCoordinates["md"] = new google.maps.LatLng(39.185433,-77.004032);
 stateCoordinates["de"] = new google.maps.LatLng(38.942321,-75.47925);
 stateCoordinates["wv"] = new google.maps.LatLng(38.642618,-80.487556);
 
-google.maps.event.addDomListener(window, 'load', initialize);
+var stateDistricts = [];
+stateDistricts["md"] = 8;
+stateDistricts["de"] = 1;
+stateDistricts["wv"] = 3;
 
 $(document).ready(function() {
+	google.maps.event.addDomListener(window, 'load', initialize(defaultState, stateDistricts[defaultState]));
+	
     var stateMenu = document.getElementById('stateMenu');
+    var districtsPicker = document.getElementById('districtsPicker');
     
-    stateMenu.addEventListener("click", function() {
-        nextState = stateMenu[stateMenu.selectedIndex].value;
-        console.log(currentState);
-        
-        if (nextState !== currentState) {
-            currentState = nextState;
-            initialize();
-        }
+    stateMenu.value = defaultState;
+    districtsPicker.value = stateDistricts[defaultState];
+    currentState = defaultState;
+    
+    stateMenu.addEventListener("change", function() {
+        currentState = stateMenu[stateMenu.selectedIndex].value;
+        districtsPicker.value = stateDistricts[currentState];
+        initialize(currentState, stateDistricts[currentState]);
+    });
+    
+    districtsPicker.addEventListener("change", function() {
+		initialize(currentState, districtsPicker.value);
     });
 });
 
-function initialize() {
+function initialize(currentState, numDistricts) {
   var mapOptions = {
     zoom: 8,
     center: stateCoordinates[currentState],
@@ -32,7 +42,7 @@ function initialize() {
   var tractPolygon;
   var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
   
-  $.getJSON("http://localhost:8080/data/" + currentState, function(result) {
+  $.getJSON("http://localhost:8080/data/" + currentState + "/" + numDistricts, function(result) {
     var usedColors = [];
     
     for (var n = 0; n < result.length; n++) {

@@ -5,7 +5,7 @@ package com.sezgk.tractor.census;
  * 
  * @author Ennis Golaszewski
  */
-public class StateCode
+public class StateService
 {
     /**
      * Delaware FIPS code.

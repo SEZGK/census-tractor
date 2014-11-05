@@ -12,7 +12,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.sezgk.tractor.census.CensusTract;
 import com.sezgk.tractor.census.CongressionalDistrict;
-import com.sezgk.tractor.census.StateCode;
+import com.sezgk.tractor.census.MapCoordinate;
+import com.sezgk.tractor.census.StateService;
 import com.sezgk.tractor.census.TractGroupingService;
 import com.sezgk.tractor.census.parser.ParsingService;
 
@@ -33,32 +34,58 @@ public class DataServlet extends HttpServlet
     static
     {
         stateCodes = new HashMap<String, Integer>();
-        stateCodes.put("/md", StateCode.MD);
-        stateCodes.put("/de", StateCode.DE);
-        stateCodes.put("/wv", StateCode.WV);
+        stateCodes.put("md", StateService.MD);
+        stateCodes.put("de", StateService.DE);
+        stateCodes.put("wv", StateService.WV);
+    }
+
+    private class DataRequest
+    {
+        public String stateCode;
+        public int nDistricts;
     }
 
     @Override
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
     {
-        int sCode;
+        DataRequest r = parseRequestURI(req.getRequestURI());
 
-        String state = req.getPathInfo();
-        sCode = stateCodes.get(state);
+        if (r.nDistricts == 0 || !stateCodes.containsKey(r.stateCode))
+        {
+            // ERROR CONDITION. TODO
+            r.nDistricts = 1;
+            r.stateCode = "md";
+        }
+        
+        int sCode = stateCodes.get(r.stateCode);
 
         List<CensusTract> tracts = ParsingService.parseTracts(sCode);
 
-        if (sCode == StateCode.MD)
+        if (sCode == StateService.MD)
         {
             tracts = ParsingService.parsePrecincts(sCode, tracts);
         }
 
-        List<CongressionalDistrict> districts = TractGroupingService.createDistricts(tracts);
+        List<CongressionalDistrict> districts = TractGroupingService.createDistricts(tracts, r.nDistricts);
 
         Gson gson = new GsonBuilder().create();
         String json = gson.toJson(districts);
 
         resp.setContentType("text/json");
         resp.getWriter().write(json);
+    }
+
+    /**
+     * Parses the request URI in order to determine the state code and the number of districts to create.
+     * 
+     * @return the request data wrapped in a <code>DataRequest</code>.
+     */
+    private DataRequest parseRequestURI(String uri)
+    {
+        String[] elements = uri.split("/");
+        DataRequest r = new DataRequest();
+        r.stateCode = elements[elements.length - 2];
+        r.nDistricts = Integer.parseInt(elements[elements.length - 1]);
+        return r;
     }
 }

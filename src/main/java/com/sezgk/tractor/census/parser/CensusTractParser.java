@@ -11,7 +11,7 @@ import com.sezgk.tractor.census.CensusTract;
 import com.sezgk.tractor.census.GeoID;
 
 /**
- * Reader for the tab-delimeted gazetteer census tract files obtained from census.gov.
+ * Reader for the tab-delimited gazetteer census tract files obtained from census.gov.
  * 
  * @author Ennis Golaszewski
  */

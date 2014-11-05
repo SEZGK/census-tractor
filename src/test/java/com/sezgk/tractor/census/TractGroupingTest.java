@@ -18,7 +18,7 @@ public class TractGroupingTest
         List<CensusTract> tracts = new ArrayList<CensusTract>();
         tracts = parser.parse("src/main/resources/tract_data/census_tracts_list_24.txt");
 
-        districts = TractGroupingService.createDistricts(tracts);
+        districts = TractGroupingService.createDistricts(tracts, 8);
 
         for (int i = 0; i < districts.size(); i++)
         {

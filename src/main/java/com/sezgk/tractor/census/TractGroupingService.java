@@ -10,17 +10,18 @@ import com.sezgk.tractor.util.Quicksort;
  * districts.
  * 
  * @author Gary Thompson
- * 
+ * @author Ennis Golaszewski - variable number of district support.
  */
 public class TractGroupingService
 {
     /**
      * Takes in a list of census tracts and groups them into congressional districts.
      * 
-     * @param tracts, the list of tracts to be grouped.
+     * @param tracts , the list of tracts to be grouped.
+     * @param nDistricts , the number of districts to form.
      * @return a list of congressional districts, together containing all of the tracts.
      */
-    public static List<CongressionalDistrict> createDistricts(List<CensusTract> tracts)
+    public static List<CongressionalDistrict> createDistricts(List<CensusTract> tracts, int numDistricts)
     {
         // Define the starting NW corner
         BigDecimal testLat = new BigDecimal(39.721077);
@@ -30,9 +31,6 @@ public class TractGroupingService
         List<CongressionalDistrict> districts = new ArrayList<CongressionalDistrict>();
         Quicksort sorter = new Quicksort(tracts, testCoord);
         tracts = sorter.getSortedCensusList();
-
-        // Maryland-specific number of districts
-        int numDistricts = 8;
 
         int statePopulation = calculateStatePopulation(tracts);
         int districtPop = 0;
