@@ -1,10 +1,5 @@
 package com.sezgk.tractor.webservice;
 
-import java.io.IOException;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.ContextHandler;
@@ -18,16 +13,8 @@ import org.eclipse.jetty.servlet.ServletHolder;
  * 
  * @author Ennis Golaszewski
  */
-public class MainServlet extends HttpServlet
+public class Main
 {
-    private static final long serialVersionUID = 2132L;
-
-    @Override
-    public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
-    {
-        // This will handle dynamic requests, if we opt to include any.
-    }
-
     public static void main(String[] args)
     {
         ResourceHandler rHandler = new ResourceHandler();

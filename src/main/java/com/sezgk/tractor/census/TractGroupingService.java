@@ -1,6 +1,5 @@
 package com.sezgk.tractor.census;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import com.sezgk.tractor.util.Quicksort;
@@ -19,17 +18,13 @@ public class TractGroupingService
      * 
      * @param tracts , the list of tracts to be grouped.
      * @param nDistricts , the number of districts to form.
+     * @param seedCoordinate, the coordinate origin from which districts should begin being built.
      * @return a list of congressional districts, together containing all of the tracts.
      */
-    public static List<CongressionalDistrict> createDistricts(List<CensusTract> tracts, int numDistricts)
+    public static List<CongressionalDistrict> createDistricts(List<CensusTract> tracts, int numDistricts, MapCoordinate seedCoordinate)
     {
-        // Define the starting NW corner
-        BigDecimal testLat = new BigDecimal(39.721077);
-        BigDecimal testLong = new BigDecimal(-79.476661);
-        MapCoordinate testCoord = new MapCoordinate(testLat, testLong);
-
         List<CongressionalDistrict> districts = new ArrayList<CongressionalDistrict>();
-        Quicksort sorter = new Quicksort(tracts, testCoord);
+        Quicksort sorter = new Quicksort(tracts, seedCoordinate);
         tracts = sorter.getSortedCensusList();
 
         int statePopulation = calculateStatePopulation(tracts);

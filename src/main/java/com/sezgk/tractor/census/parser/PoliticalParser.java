@@ -18,7 +18,6 @@ import com.sezgk.tractor.census.VotingPrecinct;
 
 public class PoliticalParser
 {
-
     private String currentLine = "";
     private String delimeter = "\t";
     private BufferedReader bReader = null;

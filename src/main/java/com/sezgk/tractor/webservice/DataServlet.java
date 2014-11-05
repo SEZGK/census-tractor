@@ -1,9 +1,7 @@
 package com.sezgk.tractor.webservice;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -12,10 +10,10 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.sezgk.tractor.census.CensusTract;
 import com.sezgk.tractor.census.CongressionalDistrict;
-import com.sezgk.tractor.census.MapCoordinate;
-import com.sezgk.tractor.census.StateService;
+import com.sezgk.tractor.census.StateData;
 import com.sezgk.tractor.census.TractGroupingService;
 import com.sezgk.tractor.census.parser.ParsingService;
+import com.sezgk.tractor.census.parser.StateService;
 
 /**
  * Implementation of the data servlet. This servlet is responsible for responding to requests hitting the /data/*
@@ -29,16 +27,6 @@ public class DataServlet extends HttpServlet
 {
     private static final long serialVersionUID = 1313131313L;
 
-    private static final Map<String, Integer> stateCodes;
-
-    static
-    {
-        stateCodes = new HashMap<String, Integer>();
-        stateCodes.put("md", StateService.MD);
-        stateCodes.put("de", StateService.DE);
-        stateCodes.put("wv", StateService.WV);
-    }
-
     private class DataRequest
     {
         public String stateCode;
@@ -49,24 +37,17 @@ public class DataServlet extends HttpServlet
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
     {
         DataRequest r = parseRequestURI(req.getRequestURI());
+        // TODO error check.
+        StateData sData = StateService.getData(r.stateCode);
 
-        if (r.nDistricts == 0 || !stateCodes.containsKey(r.stateCode))
+        List<CensusTract> tracts = ParsingService.parseTracts(sData.getStateFIPS());
+
+        if (sData.getStateAbbr().equals("MD"))
         {
-            // ERROR CONDITION. TODO
-            r.nDistricts = 1;
-            r.stateCode = "md";
-        }
-        
-        int sCode = stateCodes.get(r.stateCode);
-
-        List<CensusTract> tracts = ParsingService.parseTracts(sCode);
-
-        if (sCode == StateService.MD)
-        {
-            tracts = ParsingService.parsePrecincts(sCode, tracts);
+            tracts = ParsingService.parsePrecincts(sData.getStateFIPS(), tracts);
         }
 
-        List<CongressionalDistrict> districts = TractGroupingService.createDistricts(tracts, r.nDistricts);
+        List<CongressionalDistrict> districts = TractGroupingService.createDistricts(tracts, r.nDistricts, sData.getSeedCoordinate());
 
         Gson gson = new GsonBuilder().create();
         String json = gson.toJson(districts);

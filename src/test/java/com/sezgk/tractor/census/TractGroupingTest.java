@@ -1,5 +1,6 @@
 package com.sezgk.tractor.census;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.Test;
@@ -18,7 +19,8 @@ public class TractGroupingTest
         List<CensusTract> tracts = new ArrayList<CensusTract>();
         tracts = parser.parse("src/main/resources/tract_data/census_tracts_list_24.txt");
 
-        districts = TractGroupingService.createDistricts(tracts, 8);
+        MapCoordinate seed = new MapCoordinate(new BigDecimal("39.720986"), new BigDecimal("-79.476563"));
+        districts = TractGroupingService.createDistricts(tracts, 8, seed);
 
         for (int i = 0; i < districts.size(); i++)
         {
