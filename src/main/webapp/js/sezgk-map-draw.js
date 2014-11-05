@@ -2,13 +2,27 @@ var defaultState = "md";
 var currentState;
 
 var stateCoordinates = [];
-stateCoordinates["md"] = new google.maps.LatLng(39.185433,-77.004032);
+stateCoordinates["al"] = new google.maps.LatLng(32.739734, -86.548901);
+stateCoordinates["ak"] = new google.maps.LatLng(65.649730, -151.567989);
+stateCoordinates["az"] = new google.maps.LatLng(34.540084, -111.799071);
+stateCoordinates["ar"] = new google.maps.LatLng(34.751928, -92.329132);
+stateCoordinates["ca"] = new google.maps.LatLng(37.463966, -120.347075);
+stateCoordinates["co"] = new google.maps.LatLng(39.066207, -105.561553);
+stateCoordinates["ct"] = new google.maps.LatLng(41.675980, -72.669616);
 stateCoordinates["de"] = new google.maps.LatLng(38.942321,-75.47925);
+stateCoordinates["md"] = new google.maps.LatLng(39.185433,-77.004032);
 stateCoordinates["wv"] = new google.maps.LatLng(38.642618,-80.487556);
 
 var stateDistricts = [];
-stateDistricts["md"] = 8;
+stateDistricts["al"] = 7;
+stateDistricts["ak"] = 1;
+stateDistricts["az"] = 9;
+stateDistricts["ar"] = 4;
+stateDistricts["ca"] = 53;
+stateDistricts["co"] = 7;
+stateDistricts["ct"] = 5;
 stateDistricts["de"] = 1;
+stateDistricts["md"] = 8;
 stateDistricts["wv"] = 3;
 
 $(document).ready(function() {
