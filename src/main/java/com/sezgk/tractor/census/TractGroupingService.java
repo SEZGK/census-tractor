@@ -1,7 +1,9 @@
 package com.sezgk.tractor.census;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+
 import com.sezgk.tractor.util.Quicksort;
 
 /**
@@ -63,10 +65,55 @@ public class TractGroupingService
             tracts.remove(0);
         }
 
+        /*System.out.println("Starting to fix");
+        districts = fix(districts);
+        for (int i=0; i<districts.size(); i++)
+        {
+        	System.out.println(districts.get(i).getDistrictPop());
+        }*/
         return districts;
     }
 
-    /**
+    private static List<CongressionalDistrict> fix(List<CongressionalDistrict> districts) 
+    {
+    	List<MapCoordinate> centers = new ArrayList<MapCoordinate>();
+    	List<CongressionalDistrict> newDistricts = new ArrayList<CongressionalDistrict>();
+    	
+    	for (int i=0; i<districts.size(); i++)
+    	{
+    		centers.add(districts.get(i).getCenter());
+    		newDistricts.add(new CongressionalDistrict());
+    	}
+    	
+    	for (int j=0; j<districts.size(); j++)
+    	{
+    		for (int k=0; k<districts.get(j).getSize(); k++)
+    		{
+    			newDistricts.get(nearest(districts.get(j).getCensusTracts().get(k), centers)).addTract(districts.get(j).getCensusTracts().get(k));
+    		}
+    	}
+    	
+    	return newDistricts;
+    }
+
+	private static int nearest(CensusTract censusTract, List<MapCoordinate> centers) {
+		
+		BigDecimal currentMin = censusTract.getPosition().getDistance(centers.get(0));
+		int districtCounter = 0;
+		
+		for (int i=0; i<centers.size(); i++)
+		{
+			if (censusTract.getPosition().getDistance(centers.get(districtCounter)).compareTo(censusTract.getPosition().getDistance(centers.get(i))) > 0)
+			{
+				currentMin = censusTract.getPosition().getDistance(centers.get(i));
+				districtCounter = i;
+			}
+		}
+		
+		return districtCounter;
+	}
+
+	/**
      * Iterates through a list of tracts and sums up their population.
      * 
      * @param tracts, the list of tracts to iterate.
