@@ -61,12 +61,13 @@ function initialize(currentState, numDistricts) {
     
     for (var n = 0; n < result.length; n++) {
       var tracts = result[n].censusTracts;
-      var color = Colors.random();
+      var color = randomColor(n);
 
+	/*
       while ($.inArray(color, usedColors) !== -1) {
-        color = Colors.random();
+        color = randomColor(n);
       }
-      
+      */
       usedColors.push(color);
 
       for (var i = 0; i < tracts.length; i++) {
@@ -86,7 +87,7 @@ function initialize(currentState, numDistricts) {
             strokeColor: '#FF0000',
             strokeOpacity: 0.0,
             strokeWeight: 2,
-            fillColor: color.rgb,
+            fillColor: color,
             fillOpacity: 0.5
           });
 
