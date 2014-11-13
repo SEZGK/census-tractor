@@ -12,6 +12,7 @@ stateCoordinates["ct"] = new google.maps.LatLng(41.675980, -72.669616);
 stateCoordinates["de"] = new google.maps.LatLng(38.942321,-75.47925);
 stateCoordinates["md"] = new google.maps.LatLng(39.185433,-77.004032);
 stateCoordinates["wv"] = new google.maps.LatLng(38.642618,-80.487556);
+stateCoordinates["wy"] = new google.maps.LatLng(43.096027, -107.652833);
 
 var stateDistricts = [];
 stateDistricts["al"] = 7;
@@ -24,6 +25,7 @@ stateDistricts["ct"] = 5;
 stateDistricts["de"] = 1;
 stateDistricts["md"] = 8;
 stateDistricts["wv"] = 3;
+stateDistricts["wy"] = 1;
 
 $(document).ready(function() {
 	google.maps.event.addDomListener(window, 'load', initialize(defaultState, stateDistricts[defaultState]));
