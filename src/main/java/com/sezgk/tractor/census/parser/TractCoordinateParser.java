@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
@@ -39,6 +41,7 @@ public class TractCoordinateParser
     private static final String ioErrMsg = "Error encountered while opening or reading kml file.";
     private static final String coordErrF = "Malformed data encounted while evaluating coordinates at line %d, column %d.";
     private static final String boundErrF = "Could not find ID for tract boundary %s";
+    private static final String idParseErrF = "Could not find GEOID in description element: %s";
 
     /**
      * Parses the *.kml file on the given path for geoid->coordinate field pairs. Because it is possible for a tract to
@@ -99,7 +102,7 @@ public class TractCoordinateParser
         private String lastID = null;
 
         private boolean coordinates = false;
-        private boolean geoid = false;
+        private boolean description = false;
 
         @Override
         public void setDocumentLocator(Locator locator)
@@ -111,13 +114,12 @@ public class TractCoordinateParser
         public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException
         {
             /*
-             * We will use the GEOID field to delimit census tract entries in the kml file. This is relevant where
-             * multigeometry is involved, since a single census tract can actually have multiple coordinate entries.
-             * These will need to be parsed separately.
+             * The description element contains the GEOID. We will parse it out. All coordinates must be associated with
+             * a tract GEOID.
              */
-            if (qName.equals("SimpleData") && attributes.getValue(0).equals("GEOID"))
+            if (qName.equals("description"))
             {
-                geoid = true;
+                description = true;
             }
             else if (qName.equals("coordinates"))
             {
@@ -128,10 +130,10 @@ public class TractCoordinateParser
         @Override
         public void endElement(String uri, String localName, String qName) throws SAXException
         {
-            if (geoid)
+            if (description)
             {
-                geoid = false;
-                processIDElement();
+                description = false;
+                parseIDFromDescriptionElement();
             }
             else if (coordinates)
             {
@@ -143,7 +145,7 @@ public class TractCoordinateParser
         @Override
         public void characters(char ch[], int start, int length) throws SAXException
         {
-            if (geoid || coordinates)
+            if (description || coordinates)
             {
                 charBuffer.append(ch, start, length);
             }
@@ -164,13 +166,30 @@ public class TractCoordinateParser
         }
 
         /**
-         * Pops a GEOID string off of the buffer and creates a key in the boundary map based on it.
+         * Parses a GEOID out of the description element for a tract.
          * 
          * @throws SAXException, if an error is encountered during the conversion or the insertion into the map.
          */
-        private void processIDElement() throws SAXException
+        private void parseIDFromDescriptionElement() throws SAXException
         {
-            String id = charBuffer.toString();
+            String id = null;
+            String description = charBuffer.toString();
+
+            /* We want to find an 11 digit long number in the description. This will be the GEOID. */
+            Pattern p = Pattern.compile("(\\d{11})");
+            Matcher m = p.matcher(description);
+
+            /* Grab the first match. There should only be one. */
+            if (m.find())
+            {
+                id = m.group(0);
+            }
+            else
+            {
+                String msg = String.format(idParseErrF, description);
+                throw new SAXException(msg);
+            }
+
             insertID(id);
             lastID = id;
             clearBuffer(charBuffer);

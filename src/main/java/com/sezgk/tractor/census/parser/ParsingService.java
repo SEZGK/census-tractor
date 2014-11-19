@@ -14,7 +14,7 @@ import com.sezgk.tractor.census.TractBoundary;
 public class ParsingService
 {
     private static final String tractPathFormat = "src/main/resources/tract_data/census_tracts_list_%02d.txt";
-    private static final String coordPathFormat = "src/main/resources/kml_data/cb_2013_%02d_tract_500k.kml";
+    private static final String coordPathFormat = "src/main/resources/kml_data/2010gztract_%02d.kml";
 
     /**
      * Parses census tracts and their boundaries for the state with the given state code.
