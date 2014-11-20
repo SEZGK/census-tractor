@@ -52,7 +52,7 @@ public class TractGroupingService
                 tracts.remove(0);
 
             }
-            tracts = new Quicksort(tracts, tracts.get(0).getPosition()).getSortedCensusList();
+            tracts = new Quicksort(tracts, tracts.get(tracts.size()-1).getPosition()).getSortedCensusList();
             districtPop = 0;
         }
 
