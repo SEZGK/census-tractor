@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.5.0/pure-min.css">
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script type="text/javascript" src="js/newRandomColors.js"></script>
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCczeoMAb7Uwm_A07TEwcr259PFQRZkR8g"></script>
@@ -11,113 +11,112 @@
     	body {
     		background-color: #b0c4de;
 		}
-    
-      	.map-container {
-      		width: 98%;
-      		margin-top: 1%;
-      		margin-left: auto;
-    		margin-right: auto;
-    		background-color: #F2F2F2;
-    		border-top-left-radius: 25px;
-    		border-top-right-radius: 25px;
-      	}
-      	
-      	.menu-label {
-      		font-size: 150%;
-      		font-weight: normal;
-      	}
-      
-      	.map-menu {
-      		width: 100%;
+
+      	.map-controls {
+            padding-right: 1%;
       		padding-left: 1%;
-      		padding-right: 1%;
-      		padding-top: 1%;
+      		padding-top: 2%;
       		padding-bottom: 1%;
-      		font-family: "Trebuchet MS", Helvetica, sans-serif;
-      	}
-      	
-      	.state-picker {
-      		display: inline-block;
-      	}
-      	
-      	.ndistrict-picker {
-      		display: inline-block;
-      		padding-left: 10%;
       	}
     
       	#map-canvas {
-        	width: 100%;
         	height: 700px;
       	}
+        
+        #float-menu {
+            position: fixed;
+        }
     </style> 
   </head>
   <body>
-    <div class="map-container">
-    	<div class="map-menu">
-    		<div class="state-picker">
-    			<strong class="menu-label">Select a State</strong>
-    			<br>
-        		<select id="stateMenu">
-        		    <option value="al">Alabama</option>
-        		    <option value="ak">Alaska</option>
-        		    <option value="az">Arizona</option>
-        		    <option value="ar">Arkansas</option>
-        		    <option value="ca">California</option>
-        		    <option value="co">Colorado</option>
-        		    <option value="ct">Connecticut</option>
-        		    <option value="de">Delaware</option>
-        		    <option value="dc">District of Columbia</option>
-        		    <option value="fl">Florida</option>
-        		    <option value="ga">Georgia</option>
-        		    <option value="hi">Hawaii</option>
-        		    <option value="id">Idaho</option>
-        		    <option value="il">Illinois</option>
-        		    <option value="in">Indiana</option>
-        		    <option value="ia">Iowa</option>
-        		    <option value="ks">Kansas</option>
-        		    <option value="ky">Kentucky</option>
-        		    <option value="la">Louisiana</option>
-        		    <option value="me">Maine</option>
-            		<option value="md">Maryland</option>
-            		<option value="ma">Massachusetts</option>
-            		<option value="mi">Michigan</option>
-            		<option value="mn">Minnesota</option>
-            		<option value="ms">Mississippi</option>
-            		<option value="mo">Missouri</option>
-            		<option value="mt">Montana</option>
-            		<option value="ne">Nebraska</option>
-            		<option value="nv">Nevada</option>
-            		<option value="nh">New Hampshire</option>
-            		<option value="nj">New Jersey</option>
-            		<option value="nm">New Mexico</option>
-            		<option value="ny">New York</option>
-            		<option value="nc">North Carolina</option>
-            		<option value="nd">North Dakota</option>
-            		<option value="oh">Ohio</option>
-            		<option value="ok">Oklahoma</option>
-            		<option value="or">Oregon</option>
-            		<option value="pa">Pennsylvania</option>
-            		<option value="ri">Rhode Island</option>
-            		<option value="sc">South Carolina</option>
-            		<option value="sd">South Dakota</option>
-            		<option value="tn">Tennessee</option>
-            		<option value="tx">Texas</option>
-            		<option value="ut">Utah</option>
-            		<option value="vt">Vermont</option>
-            		<option value="va">Virginia</option>
-            		<option value="wa">Washington</option>
-            		<option value="wv">West Virginia</option>
-            		<option value="wi">Wisconsin</option>
-            		<option value="wy">Wyoming</option>
-        		</select>
-        	</div>
-        	<div class="ndistrict-picker">
-        		<strong class="menu-label">Number of Districts</strong>
-        		<br>
-        		<input type="number" id="districtsPicker" name="ndistricts" min="1" max="100">
-        	</div>
+        <div class="pure-g">
+            <div class="pure-u-1-1">
+                <div class="pure-menu pure-menu-open pure-menu-horizontal" id="float-menu">
+                    <a href="/app" class="pure-menu-heading">SEZGK</a>
+                    <ul>
+                        <li><a href="#">Map</a></li>
+                        <li><a href="#before-after">Before & After</a></li>
+                        <li><a href="#">Our Algorithm</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="pure-u-1-1">
+                    <form class="pure-form map-controls">
+                        <label>
+                        Select a State
+                        <select id="stateMenu">
+                            <option value="al">Alabama</option>
+                            <option value="ak">Alaska</option>
+                            <option value="az">Arizona</option>
+                            <option value="ar">Arkansas</option>
+                            <option value="ca">California</option>
+                            <option value="co">Colorado</option>
+                            <option value="ct">Connecticut</option>
+                            <option value="de">Delaware</option>
+                            <option value="dc">District of Columbia</option>
+                            <option value="fl">Florida</option>
+                            <option value="ga">Georgia</option>
+                            <option value="hi">Hawaii</option>
+                            <option value="id">Idaho</option>
+                            <option value="il">Illinois</option>
+                            <option value="in">Indiana</option>
+                            <option value="ia">Iowa</option>
+                            <option value="ks">Kansas</option>
+                            <option value="ky">Kentucky</option>
+                            <option value="la">Louisiana</option>
+                            <option value="me">Maine</option>
+                            <option value="md">Maryland</option>
+                            <option value="ma">Massachusetts</option>
+                            <option value="mi">Michigan</option>
+                            <option value="mn">Minnesota</option>
+                            <option value="ms">Mississippi</option>
+                            <option value="mo">Missouri</option>
+                            <option value="mt">Montana</option>
+                            <option value="ne">Nebraska</option>
+                            <option value="nv">Nevada</option>
+                            <option value="nh">New Hampshire</option>
+                            <option value="nj">New Jersey</option>
+                            <option value="nm">New Mexico</option>
+                            <option value="ny">New York</option>
+                            <option value="nc">North Carolina</option>
+                            <option value="nd">North Dakota</option>
+                            <option value="oh">Ohio</option>
+                            <option value="ok">Oklahoma</option>
+                            <option value="or">Oregon</option>
+                            <option value="pa">Pennsylvania</option>
+                            <option value="ri">Rhode Island</option>
+                            <option value="sc">South Carolina</option>
+                            <option value="sd">South Dakota</option>
+                            <option value="tn">Tennessee</option>
+                            <option value="tx">Texas</option>
+                            <option value="ut">Utah</option>
+                            <option value="vt">Vermont</option>
+                            <option value="va">Virginia</option>
+                            <option value="wa">Washington</option>
+                            <option value="wv">West Virginia</option>
+                            <option value="wi">Wisconsin</option>
+                            <option value="wy">Wyoming</option>
+                        </select>
+                        </label>
+                        <label>
+                        Number of Districts
+                        <input type="number" id="districtsPicker" name="ndistricts" min="1" max="100"></input>
+                        </label>
+                	</form>
+                </div>
+            </div>
+            <div class="pure-u-1-1">
+                <div id="map-canvas"></div>
+            </div>
+            <div class="pure-u-1-1" id="before-after">
+                <h1>Before & After</h1>
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam ultrices euismod velit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent quis urna nisi. Proin maximus velit erat, ac consectetur arcu dapibus vel. Sed sit amet metus sit amet ligula consectetur elementum ut sit amet nunc. Praesent vitae convallis justo. Ut eleifend id felis eget tristique.
+                </p>
+                <p>
+                    Sed et dictum tellus, nec tempor mauris. Cras ut elit ligula. Aenean bibendum at orci tincidunt laoreet. Sed quis eros tristique, convallis odio et, pulvinar libero. Proin diam lacus, fermentum at libero id, ultrices aliquam sapien. Nullam lobortis massa a nisl tincidunt, ac sagittis dolor ultrices. Morbi et nisi eget ex blandit pellentesque hendrerit ac odio. Nam suscipit pharetra nibh, at eleifend ex efficitur sed. Vivamus vel tempus est, id auctor erat. Proin nec felis fermentum, ultrices enim a, placerat tortor. Aliquam erat volutpat. Aliquam accumsan tellus turpis, nec consequat dui pellentesque vitae. Pellentesque ut pharetra ante. Morbi purus nulla, venenatis quis metus sit amet, luctus elementum massa. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. 
+                </p>
+            </div>
         </div>
-    	<div id="map-canvas"></div>
-    </div>
   </body>
 </html>
