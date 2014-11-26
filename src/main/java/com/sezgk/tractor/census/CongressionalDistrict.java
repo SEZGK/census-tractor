@@ -34,7 +34,7 @@ public class CongressionalDistrict
      * @param tract, the census tract to add.
      * @return the population of the tract being added.
      */
-    public void addTract(CensusTract tract)
+    public void addTract(CensusTract tract, int district)
     {
         censusTracts.add(tract);
         districtPopulation += tract.getPopulation();
@@ -48,6 +48,7 @@ public class CongressionalDistrict
                 .multiply(BigDecimal.valueOf(censusTracts.size() - 1)).add(tract.getPosition().getLongitude())
                 .divide(BigDecimal.valueOf(censusTracts.size()), new MathContext(12, RoundingMode.HALF_DOWN))
                 .setScale(12, RoundingMode.HALF_DOWN));
+        tract.setDistrict(district);
     }
 
     public List<CensusTract> getCensusTracts()

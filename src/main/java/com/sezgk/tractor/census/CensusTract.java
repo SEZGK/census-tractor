@@ -18,6 +18,8 @@ public class CensusTract
     private int democrats = 0;
     private int republicans = 0;
     private int independents = 0;
+    private int district = 0;
+    private List<BigDecimal> distances = new ArrayList<BigDecimal>();
 
     /* Some tracts have multiple boundaries.. I do not know why. -EGolaszewski */
     private List<TractBoundary> boundaries = new ArrayList<TractBoundary>();
@@ -96,4 +98,25 @@ public class CensusTract
     {
         return independents;
     }
+
+	public void setDistrict(int district) 
+	{
+		this.district = district;
+		
+	}
+	
+	public int getDistrict()
+	{
+		return district;
+	}
+	
+	public void setDistances(List<BigDecimal> distances2)
+	{
+		this.distances = distances2;
+	}
+	
+	public List<BigDecimal> getDistances()
+	{
+		return distances;
+	}
 }

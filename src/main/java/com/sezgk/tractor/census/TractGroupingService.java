@@ -34,8 +34,11 @@ public class TractGroupingService
         int districtCounter = 0;
 
         // Target population for each district
-        int targetPop = statePopulation / numDistricts;
-
+        int targetPop;
+        if (numDistricts > 0)
+        	targetPop = statePopulation / numDistricts;
+        else 
+        	targetPop = statePopulation;
         // Loop for each district:
         // - add a district
         // - add tracts until the target population is reached. As each tract is added to a district,
@@ -47,7 +50,7 @@ public class TractGroupingService
             while ((districtPop + tracts.get(0).getPopulation()) < targetPop && tracts.size() > 0)
             {
                 CensusTract nextTract = tracts.get(0);
-                districts.get(districtCounter).addTract(nextTract);
+                districts.get(districtCounter).addTract(nextTract, districtCounter);
                 districtPop += nextTract.getPopulation();
                 tracts.remove(0);
 
@@ -56,25 +59,94 @@ public class TractGroupingService
             districtPop = 0;
         }
 
+        List<MapCoordinate> centers = new ArrayList<MapCoordinate>();
+        for (int i=0; i<districts.size(); i++)
+    	{
+    		centers.add(districts.get(i).getCenter());
+    	}
         // Catch any missed tracts and add to the last district
-        while (tracts.size() > 0)
+        while (tracts.size() > 0 && numDistricts > 0)
         {
             CensusTract missedTract = tracts.get(0);
             districtPop += missedTract.getPopulation();
-            districts.get(numDistricts - 1).addTract(tracts.get(0));
+            districts.get(nearest(missedTract, centers)).addTract(tracts.get(0), nearest(missedTract, centers));
             tracts.remove(0);
         }
 
-        /*System.out.println("Starting to fix");
-        districts = fix(districts);
+        System.out.println("Starting to fix");
+        //districts = fix2(districts);
         for (int i=0; i<districts.size(); i++)
         {
         	System.out.println(districts.get(i).getDistrictPop());
-        }*/
+        }
         return districts;
     }
 
-    private static List<CongressionalDistrict> fix(List<CongressionalDistrict> districts) 
+    private static List<CongressionalDistrict> fix2(List<CongressionalDistrict> districts) 
+    {
+    	List<MapCoordinate> centers = new ArrayList<MapCoordinate>();
+    	List<CongressionalDistrict> newDistricts = new ArrayList<CongressionalDistrict>();
+    	
+    	for (int i=0; i<districts.size(); i++)
+    	{
+    		centers.add(districts.get(i).getCenter());
+    		newDistricts.add(new CongressionalDistrict());
+    	}
+    	
+    	int numDistricts = districts.size();
+    	int districtPop = 0;
+    	
+    	List<CensusTract> tracts = new ArrayList<CensusTract>();
+    	    	
+    	for (int i=0; i<districts.size(); i++)
+    	{
+    		for (int j=0; j<districts.get(i).getSize(); j++)
+    		{
+    			List<BigDecimal> distances = new ArrayList<BigDecimal>();
+    			CensusTract newTract = districts.get(i).getCensusTracts().get(j);
+    			for (int k=0; k<centers.size(); k++)
+    			{
+    				distances.add(districts.get(i).getCensusTracts().get(j).getPosition().getDistance(centers.get(k)));
+    			}
+    			newTract.setDistances(distances);
+    			tracts.add(newTract);
+    		}
+    	}
+    	
+    	int statePopulation = calculateStatePopulation(tracts);
+    	int targetPop = statePopulation / (numDistricts);
+    	    	
+    	for (int districtCounter = 0; districtCounter < numDistricts; districtCounter++)
+        {
+    		tracts = new Quicksort(tracts, centers.get(districtCounter)).getSortedCensusList();
+    		districtPop = 0;
+    		while ((districtPop + tracts.get(0).getPopulation()) < targetPop && tracts.size() > 0)
+            {
+                CensusTract nextTract = tracts.get(0);
+                newDistricts.get(districtCounter).addTract(nextTract, districtCounter);
+                districtPop += nextTract.getPopulation();
+                tracts.remove(0);
+            }
+        }
+    	
+    	List<MapCoordinate> centers2 = new ArrayList<MapCoordinate>();
+    	for (int i=0; i<newDistricts.size(); i++)
+    	{
+    		centers2.add(districts.get(i).getCenter());
+    	}
+    	
+    	while (tracts.size() > 0)
+        {
+            CensusTract missedTract = tracts.get(0);
+            districtPop += missedTract.getPopulation();
+            newDistricts.get(nearest(missedTract, centers2)).addTract(tracts.get(0), nearest(missedTract, centers2));
+            tracts.remove(0);
+        }
+    	
+		return newDistricts;
+	}
+
+	private static List<CongressionalDistrict> fix(List<CongressionalDistrict> districts) 
     {
     	List<MapCoordinate> centers = new ArrayList<MapCoordinate>();
     	List<CongressionalDistrict> newDistricts = new ArrayList<CongressionalDistrict>();
@@ -89,7 +161,7 @@ public class TractGroupingService
     	{
     		for (int k=0; k<districts.get(j).getSize(); k++)
     		{
-    			newDistricts.get(nearest(districts.get(j).getCensusTracts().get(k), centers)).addTract(districts.get(j).getCensusTracts().get(k));
+    			newDistricts.get(nearest(districts.get(j).getCensusTracts().get(k), centers)).addTract(districts.get(j).getCensusTracts().get(k), nearest(districts.get(j).getCensusTracts().get(k), centers));
     		}
     	}
     	

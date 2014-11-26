@@ -4,34 +4,34 @@ var currentState;
 var stateCoordinates = [];
 stateCoordinates["al"] = new google.maps.LatLng(32.739734, -86.548901);
 stateCoordinates["ak"] = new google.maps.LatLng(65.649730, -151.567989);
-stateCoordinates["az"] = new google.maps.LatLng(34.540084, -111.799071);
+stateCoordinates["az"] = new google.maps.LatLng(34.161818, -111.633797);
 stateCoordinates["ar"] = new google.maps.LatLng(34.751928, -92.329132);
 stateCoordinates["ca"] = new google.maps.LatLng(37.463966, -120.347075);
 stateCoordinates["co"] = new google.maps.LatLng(39.066207, -105.561553);
 stateCoordinates["ct"] = new google.maps.LatLng(41.675980, -72.669616);
-stateCoordinates["de"] = new google.maps.LatLng(38.942321, -75.47925);
+stateCoordinates["de"] = new google.maps.LatLng(39.134321, -75.564394);
 stateCoordinates["dc"] = new google.maps.LatLng(38.899774, -77.037846);
-stateCoordinates["fl"] = new google.maps.LatLng(28.764636, -81.747019);
+stateCoordinates["fl"] = new google.maps.LatLng(27.926474, -81.827888);
 stateCoordinates["ga"] = new google.maps.LatLng(33.069728, -82.395823);
 stateCoordinates["hi"] = new google.maps.LatLng(20.824374, -156.589755);
-stateCoordinates["id"] = new google.maps.LatLng(44.474184, -114.387814);
+stateCoordinates["id"] = new google.maps.LatLng(44.527843, -114.393082);
 stateCoordinates["il"] = new google.maps.LatLng(39.902591, -89.338986);
 stateCoordinates["in"] = new google.maps.LatLng(39.846776, -86.164377);
 stateCoordinates["ia"] = new google.maps.LatLng(42.281635, -93.679025);
 stateCoordinates["ks"] = new google.maps.LatLng(38.630022, -98.436105);
-stateCoordinates["ky"] = new google.maps.LatLng(37.687013, -795628);
+stateCoordinates["ky"] = new google.maps.LatLng(37.796763, -85.343513);
 stateCoordinates["la"] = new google.maps.LatLng(31.281999, -92.156468);
 stateCoordinates["me"] = new google.maps.LatLng(45.200365, -69.425755);
-stateCoordinates["md"] = new google.maps.LatLng(39.185433,-77.004032);
+stateCoordinates["md"] = new google.maps.LatLng(39.185433, -77.004032);
 stateCoordinates["ma"] = new google.maps.LatLng(42.377759, -72.205296);
-stateCoordinates["mi"] = new google.maps.LatLng(43.512664, -84.716935);
+stateCoordinates["mi"] = new google.maps.LatLng(44.402392, -85.608902);
 stateCoordinates["mn"] = new google.maps.LatLng(46.031433, -94.505189);
 stateCoordinates["ms"] = new google.maps.LatLng(32.958143, -89.715150);
 stateCoordinates["mo"] = new google.maps.LatLng(38.638482, -92.681458);
-stateCoordinates["mt"] = new google.maps.LatLng(49.901454, -110.512834);
+stateCoordinates["mt"] = new google.maps.LatLng(46.845164, -110.326424);
 stateCoordinates["ne"] = new google.maps.LatLng(41.653749, -99.866058);
 stateCoordinates["nv"] = new google.maps.LatLng(39.597978, -116.972296);
-stateCoordinates["nh"] = new google.maps.LatLng(43.638952, -71.586538);
+stateCoordinates["nh"] = new google.maps.LatLng(43.92955, -71.467781);
 stateCoordinates["nj"] = new google.maps.LatLng(40.100573, -74.530932);
 stateCoordinates["nm"] = new google.maps.LatLng(34.438503, -106.083501);
 stateCoordinates["ny"] = new google.maps.LatLng(43.026267, -75.811336);
@@ -107,6 +107,59 @@ stateDistricts["wv"] = 3
 stateDistricts["wi"] = 8
 stateDistricts["wy"] = 1
 
+var zoomLevel = [];
+zoomLevel["al"] = 7;
+zoomLevel["ak"] = 5;
+zoomLevel["az"] = 7;
+zoomLevel["ar"] = 7;
+zoomLevel["ca"] = 6;
+zoomLevel["co"] = 7;
+zoomLevel["ct"] = 9;
+zoomLevel["de"] = 9
+zoomLevel["dc"] = 11
+zoomLevel["fl"] = 7
+zoomLevel["ga"] = 7
+zoomLevel["hi"] = 8
+zoomLevel["id"] = 6
+zoomLevel["il"] = 7
+zoomLevel["in"] = 7
+zoomLevel["ia"] = 7
+zoomLevel["ks"] = 7
+zoomLevel["ky"] = 8
+zoomLevel["la"] = 7
+zoomLevel["me"] = 7
+zoomLevel["md"] = 8
+zoomLevel["ma"] = 8
+zoomLevel["mi"] = 7
+zoomLevel["mn"] = 7
+zoomLevel["ms"] = 7
+zoomLevel["mo"] = 7
+zoomLevel["mt"] = 7
+zoomLevel["ne"] = 7
+zoomLevel["nv"] = 6
+zoomLevel["nh"] = 8
+zoomLevel["nj"] = 8
+zoomLevel["nm"] = 7
+zoomLevel["ny"] = 7
+zoomLevel["nc"] = 8
+zoomLevel["nd"] = 7
+zoomLevel["oh"] = 7
+zoomLevel["ok"] = 7
+zoomLevel["or"] = 7
+zoomLevel["pa"] = 8
+zoomLevel["ri"] = 10
+zoomLevel["sc"] = 8
+zoomLevel["sd"] = 7
+zoomLevel["tn"] = 8
+zoomLevel["tx"] = 6
+zoomLevel["ut"] = 7
+zoomLevel["vt"] = 8
+zoomLevel["va"] = 8
+zoomLevel["wa"] = 7
+zoomLevel["wv"] = 8
+zoomLevel["wi"] = 7
+zoomLevel["wy"] = 7
+
 $(document).ready(function() {
 	google.maps.event.addDomListener(window, 'load', initialize(defaultState, stateDistricts[defaultState]));
 	
@@ -130,7 +183,7 @@ $(document).ready(function() {
 
 function initialize(currentState, numDistricts) {
   var mapOptions = {
-    zoom: 8,
+    zoom: zoomLevel[currentState],
     center: stateCoordinates[currentState],
     mapTypeId: google.maps.MapTypeId.TERRAIN
   };
