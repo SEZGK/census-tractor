@@ -1,4 +1,3 @@
-
 $(document).ready(function() {
 	google.maps.event.addDomListener(window, 'load', initialize(defaultState, stateDistricts[defaultState]));
 	
@@ -34,9 +33,28 @@ function initialize(currentState, numDistricts) {
     var usedColors = [];
     
     for (var n = 0; n < result.length; n++) {
+      var center = new google.maps.LatLng(result[n].center.latitude, result[n].center.longitude);
       var tracts = result[n].censusTracts;
       var color = randomColor(n);
-
+      
+      var infowindow = new google.maps.InfoWindow({
+        content: '<div style="width:150px">' + 'District: ' + (n + 1) + '<br>' + 'Population: ' + result[n].districtPopulation + '</div>',
+      });
+    
+      var marker = new google.maps.Marker({
+        position: center,
+        map: map,
+        info: infowindow
+      });
+      
+      google.maps.event.addListener(marker, 'mouseover', function() {
+        this.info.open(map, this);
+      });
+      
+      google.maps.event.addListener(marker, 'mouseout', function() {
+        this.info.close();
+      });
+      
 	/*
       while ($.inArray(color, usedColors) !== -1) {
         color = randomColor(n);
@@ -58,14 +76,13 @@ function initialize(currentState, numDistricts) {
         
           tractPolygon = new google.maps.Polygon({
             paths: points,
+            map: map,
             strokeColor: '#FF0000',
             strokeOpacity: 0.0,
             strokeWeight: 2,
             fillColor: color,
             fillOpacity: 0.5
           });
-
-          tractPolygon.setMap(map);
         }
       }
     }
