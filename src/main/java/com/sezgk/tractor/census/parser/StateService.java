@@ -53,7 +53,6 @@ public class StateService
 
             while (r.ready())
             {
-                // TODO clean this up.
                 String line = r.readLine();
                 String[] elements = line.split(",");
                 int fips = Integer.parseInt(elements[FIPS_CODE]);

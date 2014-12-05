@@ -1,6 +1,7 @@
 package com.sezgk.tractor.census.parser;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -60,7 +61,8 @@ public class TractCoordinateParser
             SAXParserFactory factory = SAXParserFactory.newInstance();
             SAXParser parser = factory.newSAXParser();
             DefaultHandler handler = new TractCoordinateHandler();
-            parser.parse(path, handler);
+            InputStream iStream = StateService.class.getResourceAsStream(path);
+            parser.parse(iStream, handler);
 
             /*
              * The boundary map will be populated by the work of the handler during parsing. See TractCoordinateHandler.

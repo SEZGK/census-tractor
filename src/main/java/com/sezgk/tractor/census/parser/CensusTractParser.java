@@ -2,8 +2,9 @@ package com.sezgk.tractor.census.parser;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -92,7 +93,8 @@ public class CensusTractParser
     private List<CensusTract> doParse(String path) throws FileNotFoundException, IOException
     {
         List<CensusTract> tracts = new ArrayList<CensusTract>();
-        bReader = new BufferedReader(new FileReader(path));
+        InputStream iStream = StateService.class.getResourceAsStream(path);
+        bReader = new BufferedReader(new InputStreamReader(iStream));
         int lineNum = 0;
 
         while (bReader.ready())
