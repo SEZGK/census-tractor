@@ -1,0 +1,36 @@
+html, body, #layout {
+    height: 100%;
+    width: 100%;
+}
+
+#map-canvas {
+    height: 85%;
+}
+
+#map-menu {
+    height: 10%;
+    align-items: center;
+    display: flex;
+    background-color: #F8F8F8;
+}
+
+#map-menu b{
+    font-family: Sans-Serif;
+    float: left;
+    padding: 10px;
+}
+
+#map-menu form {
+    margin: auto;
+    position: relative;
+    padding: 10px;
+}
+
+#state-menu, #district-picker {
+    width : 150px;
+    margin: 0;
+    
+    -webkit-box-sizing: border-box; /* For legacy WebKit based browsers */
+    -moz-box-sizing: border-box; /* For all Gecko based browsers */
+    box-sizing: border-box;
+}

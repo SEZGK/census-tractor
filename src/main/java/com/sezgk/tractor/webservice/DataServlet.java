@@ -20,6 +20,9 @@ import com.sezgk.tractor.census.parser.StateService;
  * pattern, where the wildcard is substituted by a valid state code. The response will consist of a serialized JSON
  * object representing the newly drawn congressional districts for the state with the given state code.
  * 
+ * An example of a valid URL pattern for this servlet is <code>data/md/8</code> where md is the state code of Maryland
+ * and 8 is the number of congressional districts we want to create.
+ * 
  * @author Ennis Golaszewski
  * 
  */
@@ -47,12 +50,13 @@ public class DataServlet extends HttpServlet
             tracts = ParsingService.parsePrecincts(sData.getStateFIPS(), tracts);
         }
 
-        List<CongressionalDistrict> districts = TractGroupingService.createDistricts(tracts, r.nDistricts, sData.getSeedCoordinate());
+        List<CongressionalDistrict> districts = TractGroupingService.createDistricts(tracts, r.nDistricts,
+                sData.getSeedCoordinate());
 
         Gson gson = new GsonBuilder().create();
         String json = gson.toJson(districts);
 
-        resp.setContentType("text/json");
+        resp.setContentType("text/json;charset=UTF-8");
         resp.getWriter().write(json);
     }
 

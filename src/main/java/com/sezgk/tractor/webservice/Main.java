@@ -2,9 +2,7 @@ package com.sezgk.tractor.webservice;
 
 import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Server;
-import org.eclipse.jetty.server.handler.ContextHandler;
 import org.eclipse.jetty.server.handler.HandlerList;
-import org.eclipse.jetty.server.handler.ResourceHandler;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 
@@ -17,20 +15,14 @@ public class Main
 {
     public static void main(String[] args)
     {
-        ResourceHandler rHandler = new ResourceHandler();
-        rHandler.setDirectoriesListed(false);
-        rHandler.setResourceBase("./src/main/webapp");
-
-        ContextHandler resourceContext = new ContextHandler("/app");
-        resourceContext.setHandler(rHandler);
-
         ServletContextHandler servletContext = new ServletContextHandler(ServletContextHandler.SESSIONS);
         servletContext.setContextPath("/");
         servletContext.addServlet(new ServletHolder(new DataServlet()), "/data/*");
+        servletContext.addServlet(new ServletHolder(new PageServlet()), "/");
 
         HandlerList handlers = new HandlerList();
         handlers.setHandlers(new Handler[]
-        { resourceContext, servletContext });
+        { servletContext });
 
         Server server = new Server(8080);
         server.setHandler(handlers);

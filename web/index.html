@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.5.0/pure-min.css">
+    <link rel="stylesheet" href="css/sezgk.css">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script type="text/javascript" src="js/spin.min.js"></script>
+    <script type="text/javascript" src="js/newRandomColors.js"></script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCczeoMAb7Uwm_A07TEwcr259PFQRZkR8g"></script>
+    <script type="text/javascript" src="js/sezgk-map-draw.js"></script>
+    <script type="text/javascript" src="js/sezgk-states.js"></script>
+  </head>
+  <body>
+    <div class="pure-g" id="layout">
+        <div class="pure-u-1-1 pure-menu pure-menu-open pure-menu-horizontal" id="site-menu">
+            <a class="pure-menu-heading">SEZGK</a>
+            <ul>
+                <li><a href="#">Map</a></li>
+                <li><a href="#">Political</a></li>
+                <li><a href="#">About</a></li>
+            </ul>
+        </div>
+        <div class="pure-u-1-1" id="map-menu">
+            <b>Settings</b>
+            <form onsubmit="return false;">
+                <select id="state-menu">
+                <option value="al">Alabama</option>
+                <option value="ak">Alaska</option>
+                <option value="az">Arizona</option>
+                <option value="ar">Arkansas</option>
+                <option value="ca">California</option>
+                <option value="co">Colorado</option>
+                <option value="ct">Connecticut</option>
+                <option value="de">Delaware</option>
+                <option value="dc">District of Columbia</option>
+                <option value="fl">Florida</option>
+                <option value="ga">Georgia</option>
+                <option value="hi">Hawaii</option>
+                <option value="id">Idaho</option>
+                <option value="il">Illinois</option>
+                <option value="in">Indiana</option>
+                <option value="ia">Iowa</option>
+                <option value="ks">Kansas</option>
+                <option value="ky">Kentucky</option>
+                <option value="la">Louisiana</option>
+                <option value="me">Maine</option>
+                <option value="md">Maryland</option>
+                <option value="ma">Massachusetts</option>
+                <option value="mi">Michigan</option>
+                <option value="mn">Minnesota</option>
+                <option value="ms">Mississippi</option>
+                <option value="mo">Missouri</option>
+                <option value="mt">Montana</option>
+                <option value="ne">Nebraska</option>
+                <option value="nv">Nevada</option>
+                <option value="nh">New Hampshire</option>
+                <option value="nj">New Jersey</option>
+                <option value="nm">New Mexico</option>
+                <option value="ny">New York</option>
+                <option value="nc">North Carolina</option>
+                <option value="nd">North Dakota</option>
+                <option value="oh">Ohio</option>
+                <option value="ok">Oklahoma</option>
+                <option value="or">Oregon</option>
+                <option value="pa">Pennsylvania</option>
+                <option value="ri">Rhode Island</option>
+                <option value="sc">South Carolina</option>
+                <option value="sd">South Dakota</option>
+                <option value="tn">Tennessee</option>
+                <option value="tx">Texas</option>
+                <option value="ut">Utah</option>
+                <option value="vt">Vermont</option>
+                <option value="va">Virginia</option>
+                <option value="wa">Washington</option>
+                <option value="wv">West Virginia</option>
+                <option value="wi">Wisconsin</option>
+                <option value="wy">Wyoming</option>
+                </select>
+                <input type="number" id="district-picker" min=0 max=100></input>
+                <label for="boundary-checkbox">Show Tract Boundaries</label>
+                <input type="checkbox" id="boundary-checkbox"></input>
+            </form>
+        </div>
+        <div class="pure-u-1-1" id="map-canvas"></div>
+    </div>
+  </body>
+</html>
