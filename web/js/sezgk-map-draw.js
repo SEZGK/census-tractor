@@ -107,9 +107,9 @@ function initialize(currentState, numDistricts) {
           tractPolygon = new google.maps.Polygon({
             paths: points,
             map: map,
-            strokeColor: color,
+            strokeColor: "black",
             strokeOpacity: sOpacity,
-            strokeWeight: 2,
+            strokeWeight: 1,
             fillColor: color,
             fillOpacity: 0.5
           });

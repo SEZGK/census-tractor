@@ -1,16 +1,19 @@
 $(document).ready(function() {
-  initialize("md", 8);
+  initialize();
 });
 
-function initialize(currentState, numDistricts) {
+function initialize() {
+  var currentState = "md";
+  var numDistricts = 8;
+
   var mapOptions = {
-    zoom: zoomLevel[currentState],
-    center: stateCoordinates[currentState],
+    zoom: 7,
+    center: new google.maps.LatLng(39.0, -73.610112),
     mapTypeId: google.maps.MapTypeId.TERRAIN
   };
   
   var tractPolygon;
-  var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+  var map = new google.maps.Map(document.getElementById('political-canvas'), mapOptions);
   
   $.getJSON("http://localhost:8080/data/" + currentState + "/" + numDistricts, function(result) {
     var usedColors = [];
@@ -34,7 +37,8 @@ function initialize(currentState, numDistricts) {
       	opacity = republicans / total;
       } else {
       	color = '#CC33FF';
-      	opacity = 0.5;}
+      	opacity = 0.5;
+      }
       
       var infowindow = new google.maps.InfoWindow({
         content: '<div style="width:150px">' + 'District: ' + (n + 1) + '<br>' + 'Population: ' + result[n].districtPopulation + '<br>' 
