@@ -14,7 +14,7 @@
   <body>
     <div class="pure-g" id="layout">
         <div class="pure-u-1-1 pure-menu pure-menu-open pure-menu-horizontal" id="site-menu">
-            <a class="pure-menu-heading">SEZGK</a>
+            <img src="img/logo.png" alt="Census Tractor Logo" id="logo">
             <ul>
                 <li><a href="#">Map</a></li>
                 <li><a href="#">Political</a></li>
@@ -22,9 +22,10 @@
             </ul>
         </div>
         <div class="pure-u-1-1" id="map-menu">
-            <b>Settings</b>
-            <form onsubmit="return false;">
-                <select id="state-menu">
+            <form onsubmit="return false;" class="pure-form pure-input-rounded">
+            	<fieldset>
+            	<legend>Settings</legend>
+                <select id="state-menu" class="pure-input-1-8">
                 <option value="al">Alabama</option>
                 <option value="ak">Alaska</option>
                 <option value="az">Arizona</option>
@@ -78,8 +79,11 @@
                 <option value="wy">Wyoming</option>
                 </select>
                 <input type="number" id="district-picker" min=0 max=100></input>
-                <label for="boundary-checkbox">Show Tract Boundaries</label>
-                <input type="checkbox" id="boundary-checkbox"></input>
+                <label for="boundary-checkbox">
+                	<input type="checkbox" id="boundary-checkbox"></input>
+                	Show Census Tract Boundaries
+                </label>
+                </fieldset>
             </form>
         </div>
         <div class="pure-u-1-1" id="map-canvas"></div>

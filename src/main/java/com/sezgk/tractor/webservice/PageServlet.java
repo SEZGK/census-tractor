@@ -1,13 +1,18 @@
 package com.sezgk.tractor.webservice;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.imageio.ImageIO;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 
@@ -19,7 +24,7 @@ public class PageServlet extends HttpServlet
 
     private enum MimeType
     {
-        JAVASCRIPT, HTML, CSS;
+	JAVASCRIPT, HTML, CSS, PNG;
     }
 
     private static final Map<String, MimeType> mimeTypeMap;
@@ -27,36 +32,46 @@ public class PageServlet extends HttpServlet
 
     static
     {
-        mimeTypeMap = new HashMap<String, MimeType>();
-        mimeTypeMap.put("html", MimeType.HTML);
-        mimeTypeMap.put("js", MimeType.JAVASCRIPT);
-        mimeTypeMap.put("css", MimeType.CSS);
+	mimeTypeMap = new HashMap<String, MimeType>();
+	mimeTypeMap.put("html", MimeType.HTML);
+	mimeTypeMap.put("js", MimeType.JAVASCRIPT);
+	mimeTypeMap.put("css", MimeType.CSS);
+	mimeTypeMap.put("png", MimeType.PNG);
 
-        contentTypeMap = new HashMap<MimeType, String>();
-        contentTypeMap.put(MimeType.JAVASCRIPT, "text/javascript;charset=UTF-8");
-        contentTypeMap.put(MimeType.HTML, "text/html;charset=UTF-8");
-        contentTypeMap.put(MimeType.CSS, "text/css;charset=UTF-8");
+	contentTypeMap = new HashMap<MimeType, String>();
+	contentTypeMap.put(MimeType.JAVASCRIPT, "text/javascript;charset=UTF-8");
+	contentTypeMap.put(MimeType.HTML, "text/html;charset=UTF-8");
+	contentTypeMap.put(MimeType.CSS, "text/css;charset=UTF-8");
+	contentTypeMap.put(MimeType.PNG, "image/png");
     }
 
     @Override
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
     {
-        String uri = req.getRequestURI();
-        String type = inferContentType(uri);
-        File respFile = new File(String.format(pathFormat, req.getRequestURI()));
+	String uri = req.getRequestURI();
+	System.out.println(uri);
+	String type = inferContentType(uri);
+	File respFile = new File(String.format(pathFormat, req.getRequestURI()));
 
-        if (!respFile.exists() || type == null)
-        {
-            System.out.println(uri);
-            resp.sendError(HttpServletResponse.SC_NOT_FOUND);
-        }
-        else
-        {
-            String data = FileUtils.readFileToString(respFile, "UTF-8");
-            resp.setContentType(type);
-            resp.setStatus(HttpServletResponse.SC_OK);
-            resp.getWriter().write(data);
-        }
+	if (!respFile.exists() || type == null)
+	{
+	    System.out.println(uri);
+	    resp.sendError(HttpServletResponse.SC_NOT_FOUND);
+	}
+	else if (type.equals("image/png"))
+	{
+	    BufferedImage img = ImageIO.read(respFile);
+	    OutputStream out = resp.getOutputStream();
+	    ImageIO.write(img, "png", out);
+	    out.close();
+	}
+	else
+	{
+	    String data = FileUtils.readFileToString(respFile, "UTF-8");
+	    resp.setContentType(type);
+	    resp.setStatus(HttpServletResponse.SC_OK);
+	    resp.getWriter().write(data);
+	}
     }
 
     /**
@@ -67,8 +82,8 @@ public class PageServlet extends HttpServlet
      */
     private String inferContentType(String uri)
     {
-        String extension = FilenameUtils.getExtension(uri);
-        MimeType type = mimeTypeMap.get(extension);
-        return contentTypeMap.get(type);
+	String extension = FilenameUtils.getExtension(uri);
+	MimeType type = mimeTypeMap.get(extension);
+	return contentTypeMap.get(type);
     }
 }
