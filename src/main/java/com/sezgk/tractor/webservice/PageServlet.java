@@ -16,7 +16,12 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
 
-// TODO doc
+/**
+ * The PageServlet class is responsible for responding to HTTP requests of
+ * files.
+ * 
+ * @author Ennis Golaszewski
+ */
 public class PageServlet extends HttpServlet
 {
     private static final long serialVersionUID = 1313131313L;
