@@ -29,7 +29,7 @@ public class PageServlet extends HttpServlet
 
     private enum MimeType
     {
-	JAVASCRIPT, HTML, CSS, PNG;
+	JAVASCRIPT, HTML, CSS, PNG, ICO;
     }
 
     private static final Map<String, MimeType> mimeTypeMap;
@@ -42,12 +42,14 @@ public class PageServlet extends HttpServlet
 	mimeTypeMap.put("js", MimeType.JAVASCRIPT);
 	mimeTypeMap.put("css", MimeType.CSS);
 	mimeTypeMap.put("png", MimeType.PNG);
+	mimeTypeMap.put("ico", MimeType.ICO);
 
 	contentTypeMap = new HashMap<MimeType, String>();
 	contentTypeMap.put(MimeType.JAVASCRIPT, "text/javascript;charset=UTF-8");
 	contentTypeMap.put(MimeType.HTML, "text/html;charset=UTF-8");
 	contentTypeMap.put(MimeType.CSS, "text/css;charset=UTF-8");
 	contentTypeMap.put(MimeType.PNG, "image/png");
+	contentTypeMap.put(MimeType.ICO, "image/x-icon");
     }
 
     @Override
@@ -60,7 +62,6 @@ public class PageServlet extends HttpServlet
 
 	if (iStream == null || type == null)
 	{
-	    System.out.println(path);
 	    resp.sendError(HttpServletResponse.SC_NOT_FOUND);
 	}
 	else if (type.equals("image/png"))
