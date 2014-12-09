@@ -7,8 +7,10 @@ import java.io.InputStreamReader;
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
+
 import com.sezgk.tractor.census.MapCoordinate;
 import com.sezgk.tractor.census.StateData;
+import com.sezgk.tractor.webservice.PageServlet;
 
 /**
  * The <code>StateService</code> class provides static points of entry to access state configurations.
@@ -17,7 +19,7 @@ import com.sezgk.tractor.census.StateData;
  */
 public class StateService
 {
-    private static final String dataResourcePath = "/state_data/state_data.txt";
+    private static final String dataResourcePath = "state_data/state_data.txt";
     private static final Map<String, StateData> dataMap;
     
     /* Element positions. */
@@ -48,7 +50,7 @@ public class StateService
 
         try
         {
-            InputStream iStream = StateService.class.getResourceAsStream(dataResourcePath);
+            InputStream iStream = PageServlet.getResourceAsStream(dataResourcePath);
             r = new BufferedReader(new InputStreamReader(iStream));
 
             while (r.ready())

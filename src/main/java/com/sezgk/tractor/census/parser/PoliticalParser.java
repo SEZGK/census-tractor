@@ -7,9 +7,11 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+
 import com.sezgk.tractor.census.CensusTract;
 import com.sezgk.tractor.census.GeoID;
 import com.sezgk.tractor.census.VotingPrecinct;
+import com.sezgk.tractor.webservice.PageServlet;
 
 /**
  * Reader for the tab-delimited political data file created by Gary.
@@ -41,7 +43,7 @@ public class PoliticalParser
     private static int tractNumIndex = 5;
     private static int tractNumEndIndex = 11;
 
-    private static final String precinctPathFormat = "/political_data/political_data_%d.txt";
+    private static final String precinctPathFormat = "political_data/political_data_%d.txt";
 
     // Takes the already parsed list of tracts, and adds the voter registration information as needed
     public List<CensusTract> parsePrecincts(int stateCode, List<CensusTract> tracts)
@@ -127,7 +129,7 @@ public class PoliticalParser
     private List<VotingPrecinct> doParse(String path) throws FileNotFoundException, IOException
     {
         List<VotingPrecinct> precincts = new ArrayList<VotingPrecinct>();
-        InputStream iStream = StateService.class.getResourceAsStream(path);
+        InputStream iStream = PageServlet.getResourceAsStream(path);
         bReader = new BufferedReader(new InputStreamReader(iStream));
         int lineNum = 0;
 

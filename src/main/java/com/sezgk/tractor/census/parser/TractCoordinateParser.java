@@ -9,15 +9,19 @@ import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
+
 import org.xml.sax.Attributes;
 import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
+
 import com.sezgk.tractor.census.MapCoordinate;
 import com.sezgk.tractor.census.TractBoundary;
+import com.sezgk.tractor.webservice.PageServlet;
 
 /**
  * Parser for geoid->coordinate pairings from the census tract kml files obtained at census.gov. Specifically goes
@@ -61,7 +65,7 @@ public class TractCoordinateParser
             SAXParserFactory factory = SAXParserFactory.newInstance();
             SAXParser parser = factory.newSAXParser();
             DefaultHandler handler = new TractCoordinateHandler();
-            InputStream iStream = StateService.class.getResourceAsStream(path);
+            InputStream iStream = PageServlet.getResourceAsStream(path);
             parser.parse(iStream, handler);
 
             /*

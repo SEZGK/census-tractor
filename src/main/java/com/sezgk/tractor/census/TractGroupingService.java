@@ -73,12 +73,17 @@ public class TractGroupingService
             tracts.remove(0);
         }
 
+        /*
+         * @doc-author Ennis Golaszewskis
+         * -_- 
+         *
         System.out.println("Starting to fix");
         //districts = fix2(districts);
         for (int i=0; i<districts.size(); i++)
         {
         	System.out.println(districts.get(i).getDistrictPop());
         }
+        */
         return districts;
     }
 

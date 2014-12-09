@@ -8,8 +8,10 @@ import java.io.InputStreamReader;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+
 import com.sezgk.tractor.census.CensusTract;
 import com.sezgk.tractor.census.GeoID;
+import com.sezgk.tractor.webservice.PageServlet;
 
 /**
  * Reader for the tab-delimited gazetteer census tract files obtained from census.gov.
@@ -93,7 +95,7 @@ public class CensusTractParser
     private List<CensusTract> doParse(String path) throws FileNotFoundException, IOException
     {
         List<CensusTract> tracts = new ArrayList<CensusTract>();
-        InputStream iStream = StateService.class.getResourceAsStream(path);
+        InputStream iStream = PageServlet.getResourceAsStream(path);
         bReader = new BufferedReader(new InputStreamReader(iStream));
         int lineNum = 0;
 

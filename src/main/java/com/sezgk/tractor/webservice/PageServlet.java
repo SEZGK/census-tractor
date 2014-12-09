@@ -1,8 +1,8 @@
 package com.sezgk.tractor.webservice;
 
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.Map;
@@ -13,14 +13,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.io.IOUtils;
 
 // TODO doc
 public class PageServlet extends HttpServlet
 {
     private static final long serialVersionUID = 1313131313L;
-    private static final String pathFormat = "web/%s";
+    private static final String pathPrefix = "web%s";
 
     private enum MimeType
     {
@@ -49,25 +49,25 @@ public class PageServlet extends HttpServlet
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
     {
 	String uri = req.getRequestURI();
-	System.out.println(uri);
 	String type = inferContentType(uri);
-	File respFile = new File(String.format(pathFormat, req.getRequestURI()));
+	String path = String.format(pathPrefix, uri);
+	InputStream iStream = PageServlet.getResourceAsStream(path);
 
-	if (!respFile.exists() || type == null)
+	if (iStream == null || type == null)
 	{
-	    System.out.println(uri);
+	    System.out.println(path);
 	    resp.sendError(HttpServletResponse.SC_NOT_FOUND);
 	}
 	else if (type.equals("image/png"))
 	{
-	    BufferedImage img = ImageIO.read(respFile);
+	    BufferedImage img = ImageIO.read(iStream);
 	    OutputStream out = resp.getOutputStream();
 	    ImageIO.write(img, "png", out);
 	    out.close();
 	}
 	else
 	{
-	    String data = FileUtils.readFileToString(respFile, "UTF-8");
+	    String data = IOUtils.toString(iStream);
 	    resp.setContentType(type);
 	    resp.setStatus(HttpServletResponse.SC_OK);
 	    resp.getWriter().write(data);
@@ -85,5 +85,24 @@ public class PageServlet extends HttpServlet
 	String extension = FilenameUtils.getExtension(uri);
 	MimeType type = mimeTypeMap.get(extension);
 	return contentTypeMap.get(type);
+    }
+    
+    /**
+     * TODO
+     * @param resourcePath
+     * @return
+     */
+    public static final InputStream getResourceAsStream(String resourcePath) {
+    	InputStream iStream = PageServlet.class.getClassLoader().getResourceAsStream(resourcePath);
+    	
+    	if (iStream == null) {
+    		iStream = PageServlet.class.getClassLoader().getResourceAsStream("resources/" + resourcePath);
+    	}
+
+    	if (iStream == null) {
+    		throw new RuntimeException();
+    	}
+    	
+    	return iStream;
     }
 }
