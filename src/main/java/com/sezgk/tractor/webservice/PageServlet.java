@@ -100,6 +100,7 @@ public class PageServlet extends HttpServlet
     	}
 
     	if (iStream == null) {
+    		// TODO this sucks
     		throw new RuntimeException();
     	}
     	

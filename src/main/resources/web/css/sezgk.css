@@ -3,6 +3,10 @@ html, body, #layout {
     width: 100%;
 }
 
+body {
+	background-color: #F8F8F8;
+}
+
 #map-canvas {
     height: 87%;
 }
@@ -17,4 +21,16 @@ html, body, #layout {
 	vertical-align: middle;
 	height: 30px;
 	padding-left: 5px;
+}
+
+#about-layout {
+	margin: auto;
+	width: 90%;
+	padding-top: 50px;
+}
+
+#text-div {
+	padding-top: 30px;
+	padding-left: 100px;
+	margin: auto;
 }
