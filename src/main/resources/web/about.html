@@ -16,15 +16,22 @@
                 <li><a href="#">About</a></li>
             </ul>
         </div>
-        <div class="pure-u-1-2">
-        	<div class="pure-u-1-2" id="text-div">
-        		<p>Gerrymandering - the manipulation of district boundaries in order to favor one political party</p>
-				<p>Congressional districts within states all across the country are gerrymandered… thus the need to create an unbiased redistricting algorithm</p>
-        	</div>
-        </div>
-        <div class="pure-u-1-2">
-        	<img src="img/logo.png">
-        	<img src="img/tractor.png">
+        <p>
+        <div class="pure-u-1">
+        <img src="img/logo.png">
+        <img src="img/tractor.png">
+        <div class="pure-u-5-6" id="text-div">
+        		<h1>What is Gerrymandering?</h1>
+        		<p>Gerrymandering is the manipulation of the boundaries of an electoral district in order to favor one political party. Political districts are drawn every 10 years based on the result of the census. While they are supposed to be impartial and drawn to best represent the people, politicians use this as an opportunity to secure their own political future. The majority party will frequently redraw district lines to keep as many people of the opposing party in a small number of districts. This results in more districts for the majority party. For example, Maryland has particularly gerrymandered congressional districts. In the 2014 general election, Republicans received 45.8% of the vote in the congressional election, but won only 1 of the 8 districts (12.5% representation).</p>
+   		  <h1>What is Census Tractor</h1>
+                <p>Census Tractor is an application which provides a starting point for the discussion of how to fix gerrymandering across the country. It will provide reasonably redistributed districts for every state. It would be up to a person or legislative body to make rational decision based on the results provided by Census Tractor. The only choice made prior to running the application is the starting location, therefore no consideration is made regarding other information which a reasonable person might want to understand before making a legislative choice. These could include city boundaries, waterways, or other physical features that can make two physically close locations not representatively equal.
+   		  <h1>How Census Tractor Works</h1>
+        		<p>Census Tractor Census Tractor is a universal approach to solving gerrymandering across the whole country. Each state is assigned a starting point, typically the northwest corner of the state. All the census tracts for the state are then sorted by their distance from this starting location. Census tracts are added to this district sequentially until the target district population is reached. The next district begins at the farthest census tract from the first start point. The list of remaining census tracts is resorted from this new start point, and a district is again built until the target population is reached. The third district again begins at the farthest tract from the second start point. Districting continues this way until all tracts are added. If any tracts remain, they are added to the district with the nearest center point.</p>
+                <h1>Benefits of Census Tractor</h1>
+          <p>Unlike other proposed redistricting applications, Census Tractor gives users the flexibility to see every state, and how changing the number of districts would impact their shape. It also intentionally does not use any political, social, or economic data in making calculations. Therefore it is entirely devoid of bias. Additionally, the ability to optionally see tract boundaries gives unprecedented insight into understanding the breakdown of each state at a very granular level.</p>
+                <h1>Drawbacks of Census Tractor</h1>
+                <p>Census Tractor should not be used as the final arbiter of the redistricting process; rather it makes a good starting point from which to build. Due to the extreme flexibility discussed previously, certain compromises had to be made to balance accuracy and performance. Edge cases in which a tract or group of tracts become assigned to a non-congruent district do exist, especially when using highly disparate numbers of districts. Additionally, physical and political boundaries are not given any weight in the redistricting process. There is validity in using boundaries such as the edge of a city for defining political representation, but once choices like that are made, bias is inherently introduced. 
+       	  </div>
         </div>
     </div>
   </body>
