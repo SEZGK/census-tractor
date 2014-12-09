@@ -25,9 +25,11 @@ $(document).ready(function() {
     var stateMenu = document.getElementById('state-menu');
     var districtsPicker = document.getElementById('district-picker');
     var boundaryCheckbox = document.getElementById('boundary-checkbox');
+	var pinsCheckbox = document.getElementById('pins-checkbox');
     
     stateMenu.value = defaultState;
     showBoundaries = $('#boundary-checkbox:checked').val();
+	showPins = $('#pins-checkbox:checked').checked;
     districtsPicker.value = stateDistricts[defaultState];
     currentState = defaultState;
     
@@ -42,6 +44,10 @@ $(document).ready(function() {
     });
     
     boundaryCheckbox.addEventListener("change", function() {
+        initialize(currentState, districtsPicker.value);
+    });
+	
+	pinsCheckbox.addEventListener("change", function() {
         initialize(currentState, districtsPicker.value);
     });
 });
@@ -71,7 +77,8 @@ function initialize(currentState, numDistricts) {
       var center = new google.maps.LatLng(result[n].center.latitude, result[n].center.longitude);
       var tracts = result[n].censusTracts;
       var color = randomColor(n);
-      
+	  
+      if ($("#pins-checkbox").is(":checked")) {
       var infowindow = new google.maps.InfoWindow({
         content: '<div style="width:150px">' + 'District: ' + (n + 1) + '<br>' + 'Population: ' + result[n].districtPopulation + '</div>',
       });
@@ -91,6 +98,7 @@ function initialize(currentState, numDistricts) {
       });
       
       usedColors.push(color);
+	  }
 
       for (var i = 0; i < tracts.length; i++) {
         var boundaries = tracts[i].boundaries;
