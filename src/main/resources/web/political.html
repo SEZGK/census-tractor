@@ -1,48 +1,42 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.5.0/pure-min.css">
-        <link rel="stylesheet" href="css/sezgk.css">
-        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-        <script type="text/javascript" src="js/newRandomColors.js"></script>
-        <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCczeoMAb7Uwm_A07TEwcr259PFQRZkR8g"></script>
-        <script type="text/javascript" src="js/sezgk-map-draw-political.js"></script>
-        <script type="text/javascript" src="js/sezgk-states.js"></script>
-    </head>
-    <body>
-        <div class="pure-g">
-            <div class="pure-u-1 pure-menu pure-menu-open pure-menu-horizontal" id="site-menu">
-                <img src="img/logo.png" alt="Census Tractor Logo" id="logo">
-                <ul>
-                    <li><a href="index.html">Map</a></li>
-                    <li><a href="#">Political</a></li>
-                    <li><a href="#">About</a></li>
-                </ul>
-            </div>
-            <div class="pure-u-1">
-                <div id="text-container">
-                    <h1>Before & After</h1>
-                    <p>Looking at the "Before" image, it is evident that Maryland is gerrymandered. This is clear by the unusual shapes of the districts that do not conform to any kind of boundaries. Districts that are formed solely based on population would form more compact shapes such as those shown in the "After" image.</p>
-                    <p>In the current state of events, the Republican party is only victorious in one of the eight congressional districts. However, in the state of Maryland, 25% of the voters are registered as Republicans, 55% as Democrats and 20% are other or unclassified. According to this data, the Republican party should win at least two of the eight districts, had it not been for gerrymandering.</p> 
-                    <p>In the "After" map, following the application of our algorithm to district the state, Democrats would win _ congressional districts and the Republicans would win _ districts. This is a more reflective depiction of the voter registration data.</p>
-                    <p>To learn more about the algorithm and how it works, click "Our Algorithm".</p>
-                </div>
-                <table id="compare-table">
-                    <thead>
-                        <tr>
-                            <td>Before</td>
-                            <td>After</td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Stuff</td>
-                            <td id="political-canvas"></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.5.0/pure-min.css">
+    <link rel="stylesheet" href="css/sezgk.css">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script type="text/javascript" src="js/spin.min.js"></script>
+    <script type="text/javascript" src="js/newRandomColors.js"></script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCczeoMAb7Uwm_A07TEwcr259PFQRZkR8g"></script>
+    <script type="text/javascript" src="js/sezgk-map-draw-political.js"></script>
+    <script type="text/javascript" src="js/sezgk-states.js"></script>
+  </head>
+  <body>
+    <div class="pure-g" id="layout">
+        <div class="pure-u-1-1 pure-menu pure-menu-open pure-menu-horizontal" id="site-menu">
+            <img src="img/logo.png" alt="Census Tractor Logo" id="logo">
+            <ul>
+                <li><a href="index.html">Map</a></li>
+                <li><a href="#">Political</a></li>
+                <li><a href="#">About</a></li>
+            </ul>
         </div>
-    </body>
+        <div class="pure-u-1-1" id="map-menu">
+            <form onsubmit="return false;" class="pure-form pure-input-rounded">
+            	<fieldset>
+            	<legend>Settings</legend>
+                <label for="state-menu">Select State:</label>
+                <select id="state-menu" class="pure-input-1-8">
+                <option value="md">Maryland</option>
+                </select>
+                <label for="boundary-checkbox">
+                	<input type="checkbox" id="boundary-checkbox"></input>
+                	Show Census Tract Boundaries
+                </label>
+                </fieldset>
+            </form>
+        </div>
+        <div class="pure-u-1-1" id="map-canvas"></div>
+    </div>
+  </body>
 </html>

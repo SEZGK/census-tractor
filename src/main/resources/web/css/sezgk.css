@@ -7,23 +7,6 @@ html, body, #layout {
     height: 87%;
 }
 
-#political-canvas {
-    height: 400px;
-}
-
-#text-container {
-    width: 70%;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-#compare-table {
-    margin: auto;
-    width: 70%;
-    border-spacing: 0;
-    border-collapse: collapse;
-}
-
 #map-menu {
     height: 9.3%;
     background-color: #F8F8F8;

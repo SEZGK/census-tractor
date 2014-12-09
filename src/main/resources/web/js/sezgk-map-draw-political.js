@@ -1,19 +1,37 @@
+var currentState;
+
 $(document).ready(function() {
-  initialize();
+  google.maps.event.addDomListener(window, 'load', initialize(defaultState, stateDistricts[defaultState]));
+  
+    var stateMenu = document.getElementById('state-menu');
+    var boundaryCheckbox = document.getElementById('boundary-checkbox');
+    
+    stateMenu.value = defaultState;
+    showBoundaries = $('#boundary-checkbox:checked').val();
+    currentState = defaultState;
+    
+    boundaryCheckbox.addEventListener("change", function() {
+        initialize(currentState);
+    });
 });
 
-function initialize() {
-  var currentState = "md";
-  var numDistricts = 8;
+function initialize(currentState) {
+  var numDistricts = stateDistricts[currentState];
+  
+  if ($("#boundary-checkbox").is(":checked")) {
+    sOpacity = 1.0;
+  } else {
+    sOpacity = 0.0;
+  }
 
   var mapOptions = {
-    zoom: 7,
-    center: new google.maps.LatLng(39.0, -73.610112),
+    zoom: zoomLevel[currentState],
+    center: stateCoordinates[currentState],
     mapTypeId: google.maps.MapTypeId.TERRAIN
   };
   
   var tractPolygon;
-  var map = new google.maps.Map(document.getElementById('political-canvas'), mapOptions);
+  var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
   
   $.getJSON("http://localhost:8080/data/" + currentState + "/" + numDistricts, function(result) {
     var usedColors = [];
@@ -74,9 +92,9 @@ function initialize() {
           tractPolygon = new google.maps.Polygon({
             paths: points,
             map: map,
-            strokeColor: '#FF0000',
-            strokeOpacity: 0.0,
-            strokeWeight: 2,
+            strokeColor: 'black',
+            strokeOpacity: sOpacity,
+            strokeWeight: 1,
             fillColor: color,
             fillOpacity: opacity
           });
