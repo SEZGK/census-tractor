@@ -86,24 +86,28 @@ public class PageServlet extends HttpServlet
 	MimeType type = mimeTypeMap.get(extension);
 	return contentTypeMap.get(type);
     }
-    
-    /**
-     * TODO
-     * @param resourcePath
-     * @return
-     */
-    public static final InputStream getResourceAsStream(String resourcePath) {
-    	InputStream iStream = PageServlet.class.getClassLoader().getResourceAsStream(resourcePath);
-    	
-    	if (iStream == null) {
-    		iStream = PageServlet.class.getClassLoader().getResourceAsStream("resources/" + resourcePath);
-    	}
 
-    	if (iStream == null) {
-    		// TODO this sucks
-    		throw new RuntimeException();
-    	}
-    	
-    	return iStream;
+    /**
+     * Workaround for the runnable JAR resource issue. If the resource is not
+     * found by its normal path, prepends "resources/" to its path.
+     * 
+     * @param resourcePath - the path to the resource.
+     * @return the input stream for the resource.
+     */
+    public static final InputStream getResourceAsStream(String resourcePath)
+    {
+	InputStream iStream = PageServlet.class.getClassLoader().getResourceAsStream(resourcePath);
+
+	if (iStream == null)
+	{
+	    iStream = PageServlet.class.getClassLoader().getResourceAsStream("resources/" + resourcePath);
+	}
+
+	if (iStream == null)
+	{
+	    throw new RuntimeException();
+	}
+
+	return iStream;
     }
 }
